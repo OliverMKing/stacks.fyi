@@ -5,4 +5,4 @@ Make sure you have Node version 13 or above. Use [Nodist](https://github.com/nul
 
 Ensure you have all dependencies installed. Run `yarn` in the backend, frontend, and root folders.
 
-Then run `yarn dev` to start the backend and frontend. The frontend is on port 3000 and the backend is on 30001.
+Then run `yarn dev` to start the backend and frontend. The frontend is on port 3000 and the backend is on 3001.
