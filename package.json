@@ -11,6 +11,8 @@
   },
   "repository": "https://github.com/OliverMKing/stacks.fyi.git",
   "dependencies": {
-    "concurrently": "^5.3.0"
+    "concurrently": "^5.3.0",
+    "stacks.fyi-backend": "./backend/",
+    "stacks.fyi-frontend": "./frontend/"
   }
 }
