@@ -1,0 +1,16 @@
+type Language {
+  name: String!
+  jobListings: Int
+  uniqueCompanies: Int
+}
+
+type Framework {
+  name: String!
+  jobListings: Int
+  uniqueCompanies: Int
+}
+
+type Query {
+  languageByLocation(location: String!): [Language]
+  frameworkByLocation(location: String!): [Framework]
+}
