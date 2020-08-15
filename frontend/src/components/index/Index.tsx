@@ -16,10 +16,10 @@ const IndexComponent: React.FC = () => {
 
         <div className="container pt-6 md:pt-8 px-6 mx-auto flex flex-wrap flex-col md:flex-row items-center">
           <div className="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden">
-            <h1 className="my-4 text-3xl md:text-6xl font-bold leading-tight text-gray-800 leading-tight text-center md:text-left">
+            <h1 className="my-4 text-4xl md:text-6xl font-bold leading-tight text-gray-800 leading-tight text-center md:text-left">
               Tech moves fast
             </h1>
-            <p className="leading-normal text-gray-800 md:text-4xl mb-8 text-center md:text-left">
+            <p className="leading-normal text-gray-800 md:text-4xl text-xl mb-8 text-center md:text-left">
               Efficiently research which skills are most in demand
             </p>
           </div>
@@ -68,16 +68,16 @@ const IndexComponent: React.FC = () => {
           </div>
         </div>
 
-        <div className="container bg-red-400 rounded mx-8 py-8 mb-8 text-center">
+        <div className="container bg-red-400 sm:rounded-md py-8 sm:mb-8 text-center">
           <h2 className="font-bold break-normal text-white text-4xl">
             Get started with Stacks.fyi
           </h2>
-          <h3 className="break-normal font-normal text-white text-base md:text-xl">
+          <h3 className="break-normal font-normal text-white text-xl">
             Search by location
           </h3>
           <div className="w-full text-center pt-4">
             <form action="#">
-              <div className="max-w-sm mx-auto p-1 bg-white rounded shadow flex flex-wrap items-center">
+              <div className="max-w-xs md:max-w-sm mx-auto p-1 bg-white rounded shadow flex flex-wrap items-center">
                 <input
                   type="text"
                   placeholder="Location (Ex: Raleigh, NC)"
@@ -94,7 +94,11 @@ const IndexComponent: React.FC = () => {
           </div>
         </div>
 
-        <div className="container max-w-5xl mx-auto pt-8"></div>
+        <div className="container max-w-5xl text-center mx-auto mt-4 py-4 sm:border-t">
+          <p className="text-gray-600">
+            © Stacks.fyi 2020. All Rights Reserved.
+          </p>
+        </div>
       </div>
     </div>
   );
