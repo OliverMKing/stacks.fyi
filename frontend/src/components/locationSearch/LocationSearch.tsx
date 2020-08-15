@@ -32,18 +32,23 @@ const LocationSearchComponent: React.FC = () => {
               <div className="text-gray-900 font-bold text-4xl mb-2">
                 Search popular technology stacks by city
               </div>
-              <form className="w-full max-w-lg">
-                <div className="flex items-center space-x-2">
-                  <input
-                    className="bg-white focus:outline-none border border-gray-500 rounded-lg py-3 px-4 block w-full appearance-none leading-normal"
-                    type="address"
-                    placeholder="Charlotte, NC"
-                  />
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                    Search
-                  </button>
-                </div>
-              </form>
+              <div className="w-full text-center pt-4">
+                <form action="#">
+                  <div className="max-w-xs md:max-w-sm mx-auto p-1 bg-white rounded shadow flex flex-wrap items-center">
+                    <input
+                      type="text"
+                      placeholder="Location (Ex: Raleigh, NC)"
+                      className="flex-1 appearance-none p-3 text-gray-600 mr-2"
+                    />
+                    <button
+                      type="submit"
+                      className="flex-2 block md:inline-block appearance-none text-white text-base font-semibold tracking-wider p-3 rounded bg-red-400 hover:bg-red-500"
+                    >
+                      Search
+                </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
           <div className="col-span-2">
