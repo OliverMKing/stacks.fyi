@@ -2,7 +2,7 @@ import React from "react";
 
 const NavbarComponent: React.FC = () => {
   return (
-    <nav className="flex items-center justify-between bg-white-500 py-8">
+    <nav className="flex items-center justify-between bg-white-500 py-8 md:px-5 px-8">
       <span className="font-semibold text-3xl tracking-tight">
         <a href="/">Stacks.fyi</a>
       </span>
@@ -10,7 +10,7 @@ const NavbarComponent: React.FC = () => {
         <div className="flex-grow">
           <button
             id="navAction"
-            className="mx-auto bg-purple-800 hover:bg-purple-900 text-white text-sm rounded py-2 px-8 shadow"
+            className="mx-auto bg-red-400 hover:bg-red-500 text-white text-sm rounded py-2 px-8 shadow"
             onClick={() => (window.location.href = "/location-search")}
           >
             Stacks By Location
