@@ -1,6 +1,4 @@
 import React from "react";
-import blob from "./blob.svg";
-import working from "./working.svg";
 import NavbarComponent from "../navbar/Navbar";
 
 interface Search {
@@ -25,7 +23,7 @@ const LocationSearchComponent: React.FC = () => {
   ];
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-gray-100 min-h-screen pb-3">
       <div className="w-full container mx-auto">
         <NavbarComponent />
         <div className="container max-w-5xl mx-auto m-8 pt-8">
@@ -52,7 +50,7 @@ const LocationSearchComponent: React.FC = () => {
               </div>
             </form>
           </div>
-          <div className="w-full pt-16">
+          <div className="w-full pt-24">
             <h1 className="w-full my-2 text-4xl font-bold leading-tight text-center text-gray-800">
               Common searches
             </h1>
@@ -68,7 +66,7 @@ const LocationSearchComponent: React.FC = () => {
               })}
             </div>
           </div>
-          <div className="max-w-5xl text-center mt-4 md:mt-8 pt-4 sm:border-t">
+          <div className="max-w-5xl text-center mt-4 pt-4 sm:border-t">
             <p className="text-gray-600">
               © Stacks.fyi 2020. All Rights Reserved.
             </p>
