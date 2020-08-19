@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import NavbarComponent from "../navbar/Navbar";
+import { useHistory } from 'react-router-dom';
 
 interface Search {
   name: string;
 }
 
 const LocationSearchComponent: React.FC = () => {
+  const history = useHistory();
+
   // Describes common searches, add new ones here
   const commonSearches: Search[] = [
     { name: "United States" },
@@ -21,7 +24,14 @@ const LocationSearchComponent: React.FC = () => {
     { name: "Boston, MA" },
     { name: "Seattle, WA" },
   ];
-
+  const [searchparam, setsearchparam] = useState("test");
+  const changeSearch = ({ target }: { target: any }) => {
+    setsearchparam(target.value)
+    console.log(searchparam)
+  }
+  const submitform = () => {
+    history.push("/location-results/:?q=" + searchparam);
+  }
   return (
     <div className="bg-gray-100 min-h-screen pb-3">
       <div className="w-full container mx-auto">
@@ -34,9 +44,10 @@ const LocationSearchComponent: React.FC = () => {
             Search by City, State, or Country
           </h3>
           <div className="w-full pt-8">
-            <form action="#">
+            <form onSubmit={submitform}>
               <div className="max-w-xs md:max-w-xl mx-auto p-1 bg-white rounded shadow flex flex-wrap items-center">
                 <input
+                  onChange={changeSearch}
                   type="text"
                   placeholder="Location (Ex: Raleigh, NC)"
                   className="flex-1 appearance-none p-3 text-gray-600 mr-2"
@@ -44,7 +55,7 @@ const LocationSearchComponent: React.FC = () => {
                 <button
                   type="submit"
                   className="flex-2 block md:inline-block appearance-none bg-blue-600 text-white text-base font-semibold tracking-wider p-3 rounded hover:bg-blue-500"
-                >
+                  onClick={() => (window.location.href = "/location-results/:?q=" + searchparam)}>
                   Search
                 </button>
               </div>
@@ -58,7 +69,7 @@ const LocationSearchComponent: React.FC = () => {
               {commonSearches.map((search) => {
                 return (
                   <div className="w-1/2 md:w-1/3 p-3">
-                    <button className="w-full bg-gray-200 hover:bg-gray-300 p-4 rounded">
+                    <button className="w-full bg-gray-200 hover:bg-gray-300 p-4 rounded" onClick={() => (window.location.href = "/location-results/:?q=" + search.name)}>
                       {search.name}
                     </button>
                   </div>
