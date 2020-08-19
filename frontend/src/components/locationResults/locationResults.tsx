@@ -10,17 +10,29 @@ interface Language {
   jobListings: number;
 }
 
-interface LanguageQueryResult {
-  languageByLocation: Language[];
+interface Framework {
+  name: string;
+  uniqueCompanies: number;
+  jobListings: number;
 }
 
-interface LanguageQueryVars {
+interface QueryResult {
+  languageByLocation: Language[];
+  frameworkByLocation: Framework[];
+}
+
+interface QueryVars {
   location: string;
 }
 
-const LANGUAGE_QUERY = gql`
+const QUERY = gql`
   query LanguageByLocation($location: String!) {
     languageByLocation(location: $location) {
+      name
+      uniqueCompanies
+      jobListings
+    }
+    frameworkByLocation(location: $location) {
       name
       uniqueCompanies
       jobListings
@@ -31,13 +43,13 @@ const LANGUAGE_QUERY = gql`
 const App: React.FunctionComponent<RouteComponentProps> = (props) => {
   const params = QueryString.parse(props.location.search);
   // Calls GraphQL
-  const { loading, error, data } = useQuery<
-    LanguageQueryResult,
-    LanguageQueryVars
-  >(LANGUAGE_QUERY, { variables: { location: params.q } });
+  const { loading, error, data } = useQuery<QueryResult, QueryVars>(QUERY, {
+    variables: { location: params.q },
+  });
 
   // TODO: Better loading screen and handle error
-  if (loading || !data?.languageByLocation) return <div></div>;
+  if (loading || !data?.languageByLocation || !data?.frameworkByLocation)
+    return <div></div>;
 
   const languages = data?.languageByLocation;
   const topLanguages = languages
@@ -45,8 +57,14 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
     .sort((a, b) => (a.jobListings < b.jobListings ? 1 : -1))
     .slice(0, 3);
 
+  const frameworks = data?.frameworkByLocation;
+  const topFrameworks = frameworks
+    ?.slice()
+    .sort((a, b) => (a.jobListings < b.jobListings ? 1 : -1))
+    .slice(0, 3);
+
   const ranking = (first: string, second: string, third: string) => (
-    <div className="flex flex-col sm:flex-row justify-center pt-12 my-12 sm:my-4 ">
+    <div className="flex flex-col sm:flex-row justify-center sm:pt-12 my-8 sm:my-4 ">
       <div className="sm:hidden flex flex-col w-5/6 lg:w-1/3 mx-auto lg:mx-0 rounded-lg bg-white mt-4 sm:-mt-6 shadow-lg z-10">
         <div className="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow">
           <div className="flex items-center justify-center">
@@ -115,10 +133,22 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
               </h1>
             </div>
 
+            <h1 className="w-full my-2 text-4xl font-bold leading-tight text-center text-gray-800">
+              Languages
+            </h1>
             {ranking(
               topLanguages[0].name,
               topLanguages[1].name,
               topLanguages[2].name
+            )}
+
+            <h1 className="w-full my-2 pt-16 text-4xl font-bold leading-tight text-center text-gray-800">
+              Frameworks and tools
+            </h1>
+            {ranking(
+              topFrameworks[0].name,
+              topFrameworks[1].name,
+              topFrameworks[2].name
             )}
           </section>
         </div>
