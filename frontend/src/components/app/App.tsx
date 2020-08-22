@@ -4,7 +4,14 @@ import "../../assets/main.css";
 import LocationSearchComponent from "../locationSearch/LocationSearch";
 import LocationResultsComponent from "../locationResults/locationResults";
 import IndexComponent from "../index/Index";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import NotFoundComponent from "../notFound/NotFound";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from "react-router-dom";
 
 const client = new ApolloClient({
   uri: "http://localhost:3001/graphql",
@@ -24,9 +31,11 @@ function App() {
               path="/location-results/:redirectParam"
               component={LocationResultsComponent}
             ></Route>
-
             <Route exact path="/">
               <IndexComponent />
+            </Route>
+            <Route path="*">
+              <NotFoundComponent />
             </Route>
           </Switch>
         </Router>
