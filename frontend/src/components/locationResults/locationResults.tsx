@@ -3,6 +3,7 @@ import { useQuery, gql } from "@apollo/client";
 import NavbarComponent from "../navbar/Navbar";
 import { RouteComponentProps } from "react-router-dom";
 import * as QueryString from "query-string";
+import settings from "./settings.png";
 
 interface Language {
   name: string;
@@ -44,12 +45,39 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
   const params = QueryString.parse(props.location.search);
   // Calls GraphQL
   const { loading, error, data } = useQuery<QueryResult, QueryVars>(QUERY, {
-    variables: { location: params.q },
+    variables: { location: params.q as string },
   });
 
-  // TODO: Better loading screen and handle error
+  // While GraphQL is being called
   if (loading || !data?.languageByLocation || !data?.frameworkByLocation)
     return <div></div>;
+
+  // Handles error. TODO: Handle different errors better
+  if (error) {
+    return (
+      <div className="bg-gray-100 min-h-screen pb-3">
+        <div className="w-full container mx-auto">
+          <NavbarComponent />
+          <div className="container max-w-5xl mx-auto m-8 pt-8">
+            <h1 className="w-full my-2 text-4xl font-bold leading-tight text-center text-gray-800">
+              There was an error
+            </h1>
+            <h3 className="break-normal font-normal text-gray-800 text-center text-xl">
+              We are sorry about that!
+            </h3>
+            <div className="w-full md:w-3/4 lg:w-3/5 mx-auto">
+              <img src={settings}></img>
+            </div>
+          </div>
+        </div>
+        <div className="container max-w-5xl text-center mx-auto mt-4 py-4 sm:border-t">
+          <p className="text-gray-600">
+            © Stacks.fyi 2020. All Rights Reserved.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const languages = data?.languageByLocation;
   const topLanguages = languages
