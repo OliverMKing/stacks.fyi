@@ -5,9 +5,10 @@
   "author": "Oliver King",
   "private": true,
   "scripts": {
-    "dev": "concurrently --kill-others-on-fail \"yarn backend\" \"yarn frontend\"",
+    "dev": "concurrently --kill-others-on-fail \"yarn backend\" \"yarn frontend\" \"yarn db\"",
     "frontend": "cd frontend && yarn start",
-    "backend": "cd backend && yarn start"
+    "backend": "cd backend && yarn start:dev",
+    "db": "cd backend && yarn start:dev:db"
   },
   "repository": "https://github.com/OliverMKing/stacks.fyi.git",
   "dependencies": {
