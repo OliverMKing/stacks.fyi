@@ -5,7 +5,7 @@
   "author": "Oliver King",
   "private": true,
   "scripts": {
-    "dev": "concurrently --kill-others-on-fail \"yarn backend\" \"yarn frontend\" \"yarn db\"",
+    "dev": "concurrently --kill-others-on-fail \"yarn backend\" \"yarn frontend\"",
     "frontend": "cd frontend && yarn start",
     "backend": "cd backend && yarn start:dev",
     "db": "cd backend && yarn start:dev:db"

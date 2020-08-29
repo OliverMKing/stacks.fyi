@@ -39,6 +39,8 @@ class ConfigService {
       database: this.getValue('POSTGRES_DATABASE'),
 
       entities: ['**/*.entity{.ts,.js}'],
+      // Uses compiled files
+      // entities: ['dist/**/*.entity.js'],
 
       migrationsTableName: 'migration',
 

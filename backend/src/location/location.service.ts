@@ -1,9 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { Language } from '../graphql';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Country } from 'src/model/country.entity';
+import { Repository } from 'typeorm';
+import { State } from 'src/model/state.entity';
+import { City } from 'src/model/city.entity';
 
 @Injectable()
 export class LocationService {
+  constructor(
+    @InjectRepository(Country)
+    private readonly countryRepo: Repository<Country>,
+    @InjectRepository(State) private readonly stateRepo: Repository<State>,
+    @InjectRepository(City) private readonly cityRepo: Repository<City>,
+  ) {}
+
   async findLanguageByLocation(location: string) {
+    // TODO: Write code to get language by location using injected repos
+
     return await [
       { name: 'Java', jobListings: 10, uniqueCompanies: 10 },
       { name: 'Python', jobListings: 9, uniqueCompanies: 9 },
@@ -16,6 +29,8 @@ export class LocationService {
   }
 
   async findFrameworkByLocation(location: string) {
+    // TODO: Write code to get frameworks by location using injected repos
+
     return await [
       { name: 'Spring', jobListings: 10, uniqueCompanies: 10 },
       { name: 'React', jobListings: 9, uniqueCompanies: 9 },

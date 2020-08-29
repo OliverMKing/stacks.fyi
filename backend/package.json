@@ -7,6 +7,11 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
+    "pretypeorm": "ts-node -r tsconfig-paths/register src/scripts/write-type-orm-config.ts",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "typeorm:migration:generate": "yarn typeorm -- migration:generate -n",
+    "typeorm:migration:run": "yarn typeorm -- migration:run",
+    "db:seed": "ts-node -r tsconfig-paths/register src/scripts/seed.ts",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
@@ -34,6 +39,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4",
+    "ts-node": "^9.0.0",
     "typeorm": "^0.2.25"
   },
   "devDependencies": {
