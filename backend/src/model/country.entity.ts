@@ -18,17 +18,18 @@ export class Country {
   @Column({ type: 'varchar', length: 300 })
   name: string;
 
-  @OneToOne(type => Languages)
+  @OneToOne(type => Languages, { cascade: true })
   @JoinColumn()
   languages: Languages;
 
-  @OneToOne(type => Frameworks)
+  @OneToOne(type => Frameworks, { cascade: true })
   @JoinColumn()
   frameworks: Frameworks;
 
   @OneToMany(
     type => State,
     state => state.country,
+    { cascade: true },
   )
   states: State[];
 }

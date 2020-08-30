@@ -20,11 +20,11 @@ export class State {
   @Column({ type: 'varchar', length: 300 })
   name: string;
 
-  @OneToOne(type => Languages)
+  @OneToOne(type => Languages, { cascade: true })
   @JoinColumn()
   languages: Languages;
 
-  @OneToOne(type => Frameworks)
+  @OneToOne(type => Frameworks, { cascade: true })
   @JoinColumn()
   frameworks: Frameworks;
 
@@ -37,6 +37,7 @@ export class State {
   @OneToMany(
     type => City,
     city => city.state,
+    { cascade: true },
   )
   cities: City[];
 }

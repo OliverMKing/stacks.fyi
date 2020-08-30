@@ -4,6 +4,7 @@ import { Country } from 'src/model/country.entity';
 import { State } from 'src/model/state.entity';
 import { City } from 'src/model/city.entity';
 import { Languages } from 'src/model/languages.entity';
+import { Frameworks } from 'src/model/frameworks.entity';
 
 async function run() {
   const opt = {
@@ -20,10 +21,12 @@ async function run() {
   const US = new Country();
   US.name = 'United States';
   US.languages = new Languages();
+  US.frameworks = new Frameworks();
 
   const NC = new State();
   NC.name = 'North Carolina';
   NC.languages = new Languages();
+  NC.frameworks = new Frameworks();
   NC.country = US;
 
   work.push(countryRepo.save(US));

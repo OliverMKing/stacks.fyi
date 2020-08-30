@@ -18,11 +18,11 @@ export class City {
   @Column({ type: 'varchar', length: 300 })
   name: string;
 
-  @OneToOne(type => Languages)
+  @OneToOne(type => Languages, { cascade: true })
   @JoinColumn()
   languages: Languages;
 
-  @OneToOne(type => Frameworks)
+  @OneToOne(type => Frameworks, { cascade: true })
   @JoinColumn()
   frameworks: Frameworks;
 
