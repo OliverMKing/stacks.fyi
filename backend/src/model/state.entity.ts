@@ -6,6 +6,7 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  Index,
 } from 'typeorm';
 import { Languages } from './languages.entity';
 import { Frameworks } from './frameworks.entity';
@@ -17,6 +18,7 @@ export class State {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Index()
   @Column({ type: 'varchar', length: 300 })
   name: string;
 
