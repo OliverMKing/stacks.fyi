@@ -8,7 +8,11 @@
     "dev": "concurrently --kill-others-on-fail \"yarn backend\" \"yarn frontend\"",
     "frontend": "cd frontend && yarn start",
     "backend": "cd backend && yarn start:dev",
-    "db": "cd backend && yarn start:dev:db"
+    "db": "cd backend && yarn start:dev:db",
+    "pretypeorm": "cd backend && yarn pretypeorm",
+    "typeorm:init": "cd backend && yarn typeorm:migration:generate -- my_init",
+    "typeorm:run": "cd backend && yarn typeorm:migration:run",
+    "db:seed": "cd backend && yarn db:seed"
   },
   "repository": "https://github.com/OliverMKing/stacks.fyi.git",
   "dependencies": {
