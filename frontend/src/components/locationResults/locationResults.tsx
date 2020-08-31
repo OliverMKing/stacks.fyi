@@ -153,7 +153,11 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
     </div>
   );
 
-  const getOption = (labels: string[], values: number[]): EChartOption => {
+  const getOption = (
+    labels: string[],
+    values: number[],
+    color: string
+  ): EChartOption => {
     return {
       xAxis: {
         type: "category",
@@ -168,7 +172,7 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
           type: "bar",
         },
       ],
-      color: ["#3182ce"],
+      color: [color],
     };
   };
 
@@ -195,7 +199,8 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
             <ReactEcharts
               option={getOption(
                 (languages as Language[]).map((x) => x.name),
-                (languages as Language[]).map((x) => x.uniqueCompanies)
+                (languages as Language[]).map((x) => x.uniqueCompanies),
+                "#3182ce"
               )}
             />
 
@@ -210,7 +215,8 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
             <ReactEcharts
               option={getOption(
                 (frameworks as Framework[]).map((x) => x.name),
-                (frameworks as Framework[]).map((x) => x.uniqueCompanies)
+                (frameworks as Framework[]).map((x) => x.uniqueCompanies),
+                "#fc8181"
               )}
             />
           </section>
