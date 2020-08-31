@@ -1,12 +1,22 @@
 import { createConnection, ConnectionOptions } from 'typeorm';
 import { configService } from '../config/config.service';
-import { Country } from 'src/model/country.entity';
-import { State } from 'src/model/state.entity';
-import { City } from 'src/model/city.entity';
+import { Location } from '../model/location.entity';
 import { Languages } from 'src/model/languages.entity';
 import { Frameworks } from 'src/model/frameworks.entity';
-var unirest = require("unirest");
-var languages = ["Python", "JavaScript", "Java", "C", "C++", "PHP", "R", "Swift", "Ruby", "C#"]
+var unirest = require('unirest');
+
+var languages = [
+  'Python',
+  'JavaScript',
+  'Java',
+  'C',
+  'C++',
+  'PHP',
+  'R',
+  'Swift',
+  'Ruby',
+  'C#',
+];
 async function run() {
   const opt = {
     ...configService.getTypeOrmConfig(),
@@ -14,21 +24,92 @@ async function run() {
   };
   const connection = await createConnection(opt as ConnectionOptions);
 
-  const countryRepo = connection.getRepository(Country);
-  const stateRepo = connection.getRepository(State);
-  const cityRepo = connection.getRepository(City);
+  const repo = connection.getRepository(Location);
 
   let work = [];
-  const US = new Country();
+  const US = new Location();
   US.name = 'United States';
   US.languages = new Languages();
   US.frameworks = new Frameworks();
 
-  let states = ["AK", "AL", "AR", "AS", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MP", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UM", "UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY"];
-  const NC = new State();
-  let cities = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoenix, AZ", "Philadelphia, PA", "San Antonio, TX", "San Diego, CA", "Dallas, TX", "San Jose, CA", "Austin, TX", "Fort Worth, TX", "Jacksonville, FL", "Columbus, OH", "Charlotte, NC"]
+  let states = [
+    'AK',
+    'AL',
+    'AR',
+    'AS',
+    'AZ',
+    'CA',
+    'CO',
+    'CT',
+    'DC',
+    'DE',
+    'FL',
+    'GA',
+    'GU',
+    'HI',
+    'IA',
+    'ID',
+    'IL',
+    'IN',
+    'KS',
+    'KY',
+    'LA',
+    'MA',
+    'MD',
+    'ME',
+    'MI',
+    'MN',
+    'MO',
+    'MP',
+    'MS',
+    'MT',
+    'NC',
+    'ND',
+    'NE',
+    'NH',
+    'NJ',
+    'NM',
+    'NV',
+    'NY',
+    'OH',
+    'OK',
+    'OR',
+    'PA',
+    'PR',
+    'RI',
+    'SC',
+    'SD',
+    'TN',
+    'TX',
+    'UM',
+    'UT',
+    'VA',
+    'VI',
+    'VT',
+    'WA',
+    'WI',
+    'WV',
+    'WY',
+  ];
+  let cities = [
+    'New York, NY',
+    'Los Angeles, CA',
+    'Chicago, IL',
+    'Houston, TX',
+    'Phoenix, AZ',
+    'Philadelphia, PA',
+    'San Antonio, TX',
+    'San Diego, CA',
+    'Dallas, TX',
+    'San Jose, CA',
+    'Austin, TX',
+    'Fort Worth, TX',
+    'Jacksonville, FL',
+    'Columbus, OH',
+    'Charlotte, NC',
+  ];
+
   for (let city in cities) {
-    const City = new Country();
     City.name = cities[city];
     City.languages = new Languages();
     City.frameworks = new Frameworks();
@@ -37,52 +118,39 @@ async function run() {
       const result = await callApi(lang, cities[city]);
       //result should now be the total number of hits for that language in the city
       console.log(result);
-      City.languages.java
     }
 
     //Call script here
 
-    work.push(countryRepo.save(City));
+    work.push(repo.save(US));
   }
-  NC.name = 'North Carolina';
-  NC.languages = new Languages();
-  NC.frameworks = new Frameworks();
-  NC.country = US;
-
-  work.push(countryRepo.save(US));
-  work.push(stateRepo.save(NC));
 
   return await Promise.all(work);
 }
 function callApi(lang, city) {
-
-  var req = unirest("GET", "https://indeed-com.p.rapidapi.com/search/jobs");
+  var req = unirest('GET', 'https://indeed-com.p.rapidapi.com/search/jobs');
   return new Promise(resolve => {
     req.query({
-      "sort": "relevance",
-      "location": city,
-      "offset": "0",
-      "query": languages[lang],
-      "country": "us",
-      "radius": "100"
+      sort: 'relevance',
+      location: city,
+      offset: '0',
+      query: languages[lang],
+      country: 'us',
+      radius: '100',
     });
 
     req.headers({
-      "x-rapidapi-host": "indeed-com.p.rapidapi.com",
-      "x-rapidapi-key": "",
-      "useQueryString": true
+      'x-rapidapi-host': 'indeed-com.p.rapidapi.com',
+      'x-rapidapi-key': '',
+      useQueryString: true,
     });
 
-
-    req.end(function (res) {
+    req.end(function(res) {
       if (res.error) throw new Error(res.error);
-      console.log(res.body.totalResults)
+      console.log(res.body.totalResults);
 
       resolve(res.body.totalResults);
-
     });
-
-
   });
 }
 

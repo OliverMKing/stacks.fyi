@@ -4,23 +4,30 @@ import {
   Column,
   OneToOne,
   JoinColumn,
-  ManyToOne,
-  OneToMany,
   Index,
 } from 'typeorm';
 import { Languages } from './languages.entity';
 import { Frameworks } from './frameworks.entity';
-import { Country } from './country.entity';
-import { City } from './city.entity';
 
-@Entity({ name: 'state' })
-export class State {
+// Follow instructions for validating type
+// https://stackoverflow.com/questions/44974594/postgres-enum-in-typeorm#:~:text=0%20alpha%20versions%20of%20TypeORM,enum%20for%20your%20field%20type.
+enum Type {
+  Country = 'Country',
+  State = 'State',
+  City = 'City',
+}
+
+@Entity({ name: 'location' })
+export class Location {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Index()
   @Column({ type: 'varchar', length: 300 })
   name: string;
+
+  @Column('int')
+  type: Type;
 
   @OneToOne(type => Languages, { cascade: true })
   @JoinColumn()
@@ -29,17 +36,4 @@ export class State {
   @OneToOne(type => Frameworks, { cascade: true })
   @JoinColumn()
   frameworks: Frameworks;
-
-  @ManyToOne(
-    type => Country,
-    country => country.states,
-  )
-  country: Country;
-
-  @OneToMany(
-    type => City,
-    city => city.state,
-    { cascade: true },
-  )
-  cities: City[];
 }
