@@ -109,22 +109,6 @@ async function run() {
     'Charlotte, NC',
   ];
 
-  for (let city in cities) {
-    City.name = cities[city];
-    City.languages = new Languages();
-    City.frameworks = new Frameworks();
-    for (let lang in languages) {
-      console.log('calling' + languages[lang]);
-      const result = await callApi(lang, cities[city]);
-      //result should now be the total number of hits for that language in the city
-      console.log(result);
-    }
-
-    //Call script here
-
-    work.push(repo.save(US));
-  }
-
   return await Promise.all(work);
 }
 function callApi(lang, city) {
