@@ -4,6 +4,8 @@ import NavbarComponent from "../navbar/Navbar";
 import { RouteComponentProps } from "react-router-dom";
 import * as QueryString from "query-string";
 import settings from "./settings.png";
+import ReactEcharts from "echarts-for-react";
+import { EChartOption } from "echarts";
 
 interface Language {
   name: string;
@@ -80,6 +82,7 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
     );
   }
 
+  // Get top 3 information
   const languages = data?.languageByLocation;
   const topLanguages = languages
     ?.slice()
@@ -150,6 +153,25 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
     </div>
   );
 
+  const getOption = (labels: string[], values: number[]): EChartOption => {
+    return {
+      xAxis: {
+        type: "category",
+        data: labels,
+      },
+      yAxis: {
+        type: "value",
+      },
+      series: [
+        {
+          data: values,
+          type: "bar",
+        },
+      ],
+      color: ["#3182ce"],
+    };
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen pb-3">
       <div className="w-full container mx-auto">
@@ -170,6 +192,12 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
               topLanguages[1].name,
               topLanguages[2].name
             )}
+            <ReactEcharts
+              option={getOption(
+                (languages as Language[]).map((x) => x.name),
+                (languages as Language[]).map((x) => x.uniqueCompanies)
+              )}
+            />
 
             <h1 className="w-full my-2 pt-16 text-4xl font-bold leading-tight text-center text-gray-800">
               Frameworks and tools
@@ -179,6 +207,12 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
               topFrameworks[1].name,
               topFrameworks[2].name
             )}
+            <ReactEcharts
+              option={getOption(
+                (frameworks as Framework[]).map((x) => x.name),
+                (frameworks as Framework[]).map((x) => x.uniqueCompanies)
+              )}
+            />
           </section>
         </div>
         <div className="container max-w-5xl text-center mx-auto mt-4 py-4 sm:border-t">
