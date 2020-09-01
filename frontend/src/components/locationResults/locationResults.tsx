@@ -175,7 +175,7 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
       color: [color],
       textStyle: {
         fontFamily:
-          "'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
+          "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
       },
     };
   };
