@@ -14,27 +14,27 @@ const IndexComponent: React.FC = () => {
       <div className="w-full container mx-auto">
         <NavbarComponent />
 
-        <div className="container pt-6 md:pt-8 px-6 mx-auto flex flex-wrap flex-col md:flex-row items-center">
-          <div className="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden">
-            <h1 className="my-4 text-4xl md:text-6xl font-bold leading-tight text-gray-800 leading-tight text-center md:text-left">
+        <div className="container pt-6 xl:pt-8 px-6 mx-auto flex flex-wrap flex-col md:flex-row items-center">
+          <div className="flex flex-col w-full lg:w-2/5 justify-center lg:items-start overflow-y-hidden">
+            <h1 className="my-4 text-4xl md:text-6xl font-bold leading-tight text-gray-800 leading-tight text-center lg:text-left">
               Tech moves fast
             </h1>
-            <p className="leading-normal text-gray-800 md:text-4xl text-xl mb-8 text-center md:text-left">
+            <p className="leading-normal text-gray-800 md:text-4xl text-2xl mb-8 text-center lg:text-left">
               Efficiently research which skills are most in demand
             </p>
           </div>
-          <div className="w-full xl:w-3/5 py-6 overflow-y-hidden">
-            <img className="w-full mx-auto lg:mr-0 " src={analyse}></img>
+          <div className="w-full lg:w-3/5 xl:py-6 overflow-y-hidden">
+            <img className="w-full mx-auto " src={analyse}></img>
           </div>
         </div>
 
-        <div className="container max-w-5xl mx-auto m-8 pt-8">
+        <div className="container max-w-5xl mx-auto m-8 md:pt-8">
           <h1 className="w-full my-2 text-4xl font-bold leading-tight text-center text-gray-800">
             Stay in the loop
           </h1>
 
           <div className="flex flex-wrap">
-            <div className="w-5/6 sm:w-1/2 p-6">
+            <div className="w-5/6 sm:w-1/2 p-6 pb-0">
               <h3 className="text-3xl text-gray-800 leading-none mb-3">
                 Search by location
               </h3>
@@ -45,23 +45,22 @@ const IndexComponent: React.FC = () => {
               </p>
             </div>
             <div className="w-full sm:w-1/2">
-              <img src={support} />
+              <img className="-mt-4 lg:-mt-6" src={support} />
             </div>
           </div>
 
           <div className="flex flex-wrap flex-col-reverse sm:flex-row">
             <div className="w-full sm:w-1/2">
-              <img src={settings} />
+              <img className="-mt-4 lg:-mt-10" src={settings} />
             </div>
-            <div className="w-full sm:w-1/2 p-6 mt-6">
+            <div className="w-full sm:w-1/2 p-6 pb-0 mt-6">
               <div className="align-middle">
                 <h3 className="text-3xl text-gray-800 leading-none mb-3">
-                  Filter results
+                  Compare results
                 </h3>
                 <p className="text-gray-600 mb-8">
-                  Adjust settings to personalize searches based on your
-                  demographics. Breaking down data can help you make more
-                  informed decisions.
+                  Contrast results of different areas. Viewing correlations in
+                  data can help you make more informed decisions.
                 </p>
               </div>
             </div>
