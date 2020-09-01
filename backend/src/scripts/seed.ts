@@ -4,7 +4,95 @@ import { Location, Type } from '../model/location.entity';
 import { Languages } from 'src/model/languages.entity';
 import { Frameworks } from 'src/model/frameworks.entity';
 var unirest = require('unirest');
+const cities = require('all-the-cities');
+const yourhandle = require('countrycitystatejson');
+let statemap = new Map()
+statemap.set('Alaska', 'AK');
+statemap.set('Alabama', 'AL');
+statemap.set('Arkansas', 'AR');
+statemap.set('California', 'CA');
+statemap.set('Colorado', 'CO');
+statemap.set('Arizona', 'AZ');
+statemap.set('Connecticut', 'CT');
+statemap.set('Delaware', 'DE');
+statemap.set('Florida', 'FL');
+statemap.set('Georgia', 'GA');
+statemap.set('Hawaii', 'HI');
+statemap.set('Idaho', 'ID');
+statemap.set('Illinois', 'IL');
+statemap.set('Indiana', 'IN');
+statemap.set('Iowa', 'IA');
+statemap.set('Kansas', 'KS');
+statemap.set('Kentucky', 'KY');
+statemap.set('Louisiana', 'LA');
+statemap.set('Maine', 'ME');
+statemap.set('Maryland', 'MD');
+statemap.set('Massachusetts', 'MA');
+statemap.set('Michigan', 'MI');
+statemap.set('Minnesota', 'MN');
+statemap.set('Mississippi', 'MS');
+statemap.set('Missouri', 'MO');
+statemap.set('Montana', 'MT');
+statemap.set('Nebraska', 'NE');
+statemap.set('Nevada', 'NV');
+statemap.set('New Hampshire', 'NH');
+statemap.set('New Jersey', 'NJ');
+statemap.set('New Mexico', 'NM');
+statemap.set('New York', 'NY');
+statemap.set('North Carolina', 'NC');
+statemap.set('North Dakota', 'ND');
+statemap.set('Ohio', 'OH');
+statemap.set('Oklahoma', 'OK');
+statemap.set('Oregon', 'OR');
+statemap.set('Pennsylvania', 'PA');
+statemap.set('Rhode Island', 'RI');
+statemap.set('South Carolina', 'SC');
+statemap.set('South Dakota', 'SD');
+statemap.set('Tennessee', 'TN');
+statemap.set('Texas', 'TX');
+statemap.set('Utah', 'UT');
+statemap.set('Vermont', 'VT');
+statemap.set('Virginia', 'VA');
+statemap.set('Washington', 'WA');
+statemap.set('Wisconsin', 'WI');
+statemap.set('Wyoming', 'WY');
+statemap.set('West Virginia', 'WV');
 
+let states = yourhandle.getCountryByShort('US').states;
+let count = 0;
+var array = [];
+for (let state in states) {
+  console.log(state);
+  let cities2 = yourhandle.getCities('US', state);
+  for (let city in cities2) {
+    let varry = cities2[city];
+    // console.log(cities2[city]);
+    let thecity = cities.filter(city => city.name.match(varry));
+    try {
+      for (let eachcity in thecity) {
+        let cityabrev = statemap.get(state);
+
+        if (thecity[eachcity].population > 50000 && thecity[eachcity].country == 'US' && thecity[eachcity].adminCode == cityabrev) {
+          //  console.log("-------------------BIG CITY------------------")
+          //  console.log(thecity[eachcity]);
+          array.push(thecity[eachcity].name + ", " + thecity[eachcity].adminCode);
+          count += 1;
+        }
+      }
+
+    }
+    catch{
+
+    }
+
+  }
+
+
+}
+for (let city3 in array) {
+  console.log(array[city3]);
+}
+console.log(count + "TOTAL CITIES")
 var languages = [
   'Python',
   'JavaScript',
@@ -93,23 +181,6 @@ async function run() {
     'WV',
     'WY',
   ];
-  let cities = [
-    'New York, NY',
-    'Los Angeles, CA',
-    'Chicago, IL',
-    'Houston, TX',
-    'Phoenix, AZ',
-    'Philadelphia, PA',
-    'San Antonio, TX',
-    'San Diego, CA',
-    'Dallas, TX',
-    'San Jose, CA',
-    'Austin, TX',
-    'Fort Worth, TX',
-    'Jacksonville, FL',
-    'Columbus, OH',
-    'Charlotte, NC',
-  ];
 
   return await Promise.all(work);
 }
@@ -131,7 +202,7 @@ function callApi(lang, city) {
       useQueryString: true,
     });
 
-    req.end(function(res) {
+    req.end(function (res) {
       if (res.error) throw new Error(res.error);
       console.log(res.body.totalResults);
 
