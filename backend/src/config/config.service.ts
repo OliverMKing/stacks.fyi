@@ -28,7 +28,7 @@ class ConfigService {
     return mode != 'DEV';
   }
 
-  public getTypeOrmConfig(): TypeOrmModuleOptions {
+  public getTypeOrmConfig(seeding = false): TypeOrmModuleOptions {
     return {
       type: 'postgres',
 
@@ -38,9 +38,9 @@ class ConfigService {
       password: this.getValue('POSTGRES_PASSWORD'),
       database: this.getValue('POSTGRES_DATABASE'),
 
-      // entities: ['**/*.entity{.ts,.js}'],
+      entities: seeding ? ['**/*.entity{.ts,.js}'] : ['dist/**/*.entity.js'],
       // Uses compiled files
-      entities: ['dist/**/*.entity.js'],
+      // entities: ['dist/**/*.entity.js'],
 
       migrationsTableName: 'migration',
 

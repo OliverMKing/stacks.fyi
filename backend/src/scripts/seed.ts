@@ -19,7 +19,7 @@ var languages = [
 ];
 async function run() {
   const opt = {
-    ...configService.getTypeOrmConfig(),
+    ...configService.getTypeOrmConfig(true),
     debug: true,
   };
   const connection = await createConnection(opt as ConnectionOptions);
