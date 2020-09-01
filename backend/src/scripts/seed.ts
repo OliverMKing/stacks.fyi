@@ -164,7 +164,7 @@ function callApi(lang, city) {
 
     req.headers({
       'x-rapidapi-host': 'indeed-com.p.rapidapi.com',
-      'x-rapidapi-key': 'c1f5d023a5msh6b37379a354f0cfp1b3b0ajsn20c3b258ab1a',
+      'x-rapidapi-key': '',
       useQueryString: true,
     });
 
