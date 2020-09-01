@@ -1,6 +1,6 @@
 import { createConnection, ConnectionOptions } from 'typeorm';
 import { configService } from '../config/config.service';
-import { Location } from '../model/location.entity';
+import { Location, Type } from '../model/location.entity';
 import { Languages } from 'src/model/languages.entity';
 import { Frameworks } from 'src/model/frameworks.entity';
 var unirest = require('unirest');
@@ -30,7 +30,9 @@ async function run() {
   const US = new Location();
   US.name = 'United States';
   US.languages = new Languages();
+  US.type = Type.Country;
   US.frameworks = new Frameworks();
+  work.push(repo.save(US));
 
   let states = [
     'AK',

@@ -11,10 +11,10 @@ import { Frameworks } from './frameworks.entity';
 
 // Follow instructions for validating type
 // https://stackoverflow.com/questions/44974594/postgres-enum-in-typeorm#:~:text=0%20alpha%20versions%20of%20TypeORM,enum%20for%20your%20field%20type.
-enum Type {
-  Country = 'Country',
-  State = 'State',
-  City = 'City',
+export enum Type {
+  Country,
+  State,
+  City,
 }
 
 @Entity({ name: 'location' })

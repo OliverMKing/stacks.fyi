@@ -45,7 +45,9 @@ class ConfigService {
       migrationsTableName: 'migration',
 
       // Changed from .ts so it finds the compiled files
-      migrations: ['src/migration/*.js'],
+      migrations: seeding
+        ? ['src/migration/*{.ts,.js}']
+        : ['src/migration/*.js'],
 
       cli: {
         migrationsDir: 'src/migration',
