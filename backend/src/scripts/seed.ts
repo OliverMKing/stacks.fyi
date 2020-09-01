@@ -3,6 +3,8 @@ import { configService } from '../config/config.service';
 import { Location, Type } from '../model/location.entity';
 import { Languages } from 'src/model/languages.entity';
 import { Frameworks } from 'src/model/frameworks.entity';
+import { createInferTypeNode } from 'typescript';
+import { UseFilters } from '@nestjs/common';
 var unirest = require('unirest');
 const cities = require('all-the-cities');
 const yourhandle = require('countrycitystatejson');
@@ -58,53 +60,52 @@ statemap.set('Wisconsin', 'WI');
 statemap.set('Wyoming', 'WY');
 statemap.set('West Virginia', 'WV');
 
-let states = yourhandle.getCountryByShort('US').states;
-let count = 0;
-var array = [];
-for (let state in states) {
-  console.log(state);
-  let cities2 = yourhandle.getCities('US', state);
-  for (let city in cities2) {
-    let varry = cities2[city];
-    // console.log(cities2[city]);
-    let thecity = cities.filter(city => city.name.match(varry));
-    try {
-      for (let eachcity in thecity) {
-        let cityabrev = statemap.get(state);
+// let states = yourhandle.getCountryByShort('US').states;
+// let count = 0;
+// var array = [];
+// for (let state in states) {
+//   console.log(state);
+//   let cities2 = yourhandle.getCities('US', state);
+//   for (let city in cities2) {
+//     let varry = cities2[city];
+//     // console.log(cities2[city]);
+//     let thecity = cities.filter(city => city.name.match(varry));
+//     try {
+//       for (let eachcity in thecity) {
+//         let cityabrev = statemap.get(state);
 
-        if (thecity[eachcity].population > 50000 && thecity[eachcity].country == 'US' && thecity[eachcity].adminCode == cityabrev) {
-          //  console.log("-------------------BIG CITY------------------")
-          //  console.log(thecity[eachcity]);
-          array.push(thecity[eachcity].name + ", " + thecity[eachcity].adminCode);
-          count += 1;
-        }
-      }
+//         if (thecity[eachcity].population > 100000 && thecity[eachcity].country == 'US' && thecity[eachcity].adminCode == cityabrev) {
+//           //  console.log("-------------------BIG CITY------------------")
+//           //  console.log(thecity[eachcity]);
+//           array.push(thecity[eachcity].name + ", " + thecity[eachcity].adminCode);
+//           count += 1;
+//         }
+//       }
 
-    }
-    catch{
+//     }
+//     catch{
 
-    }
+//     }
 
-  }
+//   }
 
 
-}
-for (let city3 in array) {
-  console.log(array[city3]);
-}
-console.log(count + "TOTAL CITIES")
+// }
+// for (let city3 in array) {
+//   console.log(array[city3]);
+// }
+var testcities = [
+  'Seattle, WA'
+]
+
 var languages = [
-  'Python',
-  'JavaScript',
   'Java',
-  'C',
-  'C++',
-  'PHP',
-  'R',
-  'Swift',
-  'Ruby',
-  'C#',
+  'JavaScript', 'Ruby', 'Python', 'C++', 'C#', 'Golang', 'TypeScript', 'Dart', 'Haskell', 'PHP', 'Swift', 'Perl', 'Kotlin', 'Rust', 'Scala', 'Objective-C'
 ];
+var frameworks = [
+  'Node.js', 'React', 'Rails', 'Angular', 'Django', 'Symfony', 'Laravel', 'Spring', 'Vue', 'Flask', 'jQuery', 'ASP.NET'
+]
+
 async function run() {
   const opt = {
     ...configService.getTypeOrmConfig(true),
@@ -120,78 +121,43 @@ async function run() {
   US.languages = new Languages();
   US.type = Type.Country;
   US.frameworks = new Frameworks();
+
+  for (let language in Object.keys(US.languages)) {
+    console.log(language);
+  }
+  for (let city3 in testcities) {
+    const city = new Location();
+    city.name = testcities[city3];
+    city.languages = new Languages();
+    city.type = Type.City;
+    city.frameworks = new Frameworks();
+
+    for (let lang in languages) {
+      //let total = await (callApi(languages[lang], testcities[city3]));
+      city.languages[languages[lang]] = 5;
+    }
+    for (let frame in frameworks) {
+      //let total = await (callApi(frameworks[frame], testcities[city3]));
+      city.frameworks[frameworks[frame]] = 4;
+    }
+
+    work.push(repo.save(city));
+  }
   work.push(repo.save(US));
 
-  let states = [
-    'AK',
-    'AL',
-    'AR',
-    'AS',
-    'AZ',
-    'CA',
-    'CO',
-    'CT',
-    'DC',
-    'DE',
-    'FL',
-    'GA',
-    'GU',
-    'HI',
-    'IA',
-    'ID',
-    'IL',
-    'IN',
-    'KS',
-    'KY',
-    'LA',
-    'MA',
-    'MD',
-    'ME',
-    'MI',
-    'MN',
-    'MO',
-    'MP',
-    'MS',
-    'MT',
-    'NC',
-    'ND',
-    'NE',
-    'NH',
-    'NJ',
-    'NM',
-    'NV',
-    'NY',
-    'OH',
-    'OK',
-    'OR',
-    'PA',
-    'PR',
-    'RI',
-    'SC',
-    'SD',
-    'TN',
-    'TX',
-    'UM',
-    'UT',
-    'VA',
-    'VI',
-    'VT',
-    'WA',
-    'WI',
-    'WV',
-    'WY',
-  ];
+
 
   return await Promise.all(work);
 }
 function callApi(lang, city) {
   var req = unirest('GET', 'https://indeed-com.p.rapidapi.com/search/jobs');
+  console.log(lang);
   return new Promise(resolve => {
     req.query({
       sort: 'relevance',
       location: city,
       offset: '0',
-      query: languages[lang],
+      query: lang,
       country: 'us',
       radius: '100',
     });
@@ -205,7 +171,6 @@ function callApi(lang, city) {
     req.end(function (res) {
       if (res.error) throw new Error(res.error);
       console.log(res.body.totalResults);
-
       resolve(res.body.totalResults);
     });
   });
