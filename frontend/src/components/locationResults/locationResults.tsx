@@ -153,30 +153,40 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
     </div>
   );
 
+  console.log(
+    (languages as Language[]).map((x) => [x.name, x.uniqueCompanies])
+  );
+
   const getOption = (
-    labels: string[],
-    values: number[],
+    data: (string | number)[][],
     color: string
   ): EChartOption => {
+    data.unshift(["name", "count"]);
+
     return {
-      xAxis: {
-        type: "category",
-        data: labels,
+      dataset: {
+        source: data,
       },
-      yAxis: {
-        type: "value",
+      color: [color],
+      xAxis: { type: "value" },
+      yAxis: { type: "category" },
+      grid: {
+        height: data.length * 35,
+        containLabel: true,
+        bottom: 20,
+        top: 20,
       },
       series: [
         {
-          data: values,
           type: "bar",
+          encode: {
+            // Map the "count" column to X axis.
+            x: "count",
+            // Map the "name" column to Y axis
+            y: "name",
+          },
         },
       ],
-      color: [color],
-      textStyle: {
-        fontFamily:
-          "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
-      },
     };
   };
 
@@ -202,8 +212,10 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
             )}
             <ReactEcharts
               option={getOption(
-                (languages as Language[]).map((x) => x.name),
-                (languages as Language[]).map((x) => x.uniqueCompanies),
+                (languages as Language[]).map((x) => [
+                  x.name,
+                  x.uniqueCompanies,
+                ]),
                 "#3182ce"
               )}
             />
@@ -218,8 +230,10 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
             )}
             <ReactEcharts
               option={getOption(
-                (frameworks as Framework[]).map((x) => x.name),
-                (frameworks as Framework[]).map((x) => x.uniqueCompanies),
+                (frameworks as Framework[]).map((x) => [
+                  x.name,
+                  x.uniqueCompanies,
+                ]),
                 "#fc8181"
               )}
             />
