@@ -245,6 +245,7 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
             <a href="https://icons8.com/icon/X6CJMckcVrBj/1st-place-medal">
               Icons by Icons8
             </a>
+            .
           </p>
         </div>
       </div>

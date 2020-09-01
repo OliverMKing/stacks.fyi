@@ -95,7 +95,11 @@ const IndexComponent: React.FC = () => {
 
         <div className="container max-w-5xl text-center mx-auto mt-4 py-4 sm:border-t">
           <p className="text-gray-600">
-            © Stacks.fyi 2020. All Rights Reserved.
+            © Stacks.fyi 2020. All Rights Reserved.{" "}
+            <a href="https://www.pixeltrue.com/illustrations">
+              Images by Pixel True
+            </a>
+            .
           </p>
         </div>
       </div>
