@@ -242,7 +242,11 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
         <div className="container max-w-5xl text-center mx-auto mt-4 py-4 sm:border-t">
           <p className="text-gray-600">
             © Stacks.fyi 2020. All Rights Reserved.{" "}
-            <a href="https://icons8.com/icon/X6CJMckcVrBj/1st-place-medal">
+            <a
+              href="https://icons8.com/icon/X6CJMckcVrBj/1st-place-medal"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Icons by Icons8
             </a>
             .
