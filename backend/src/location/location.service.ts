@@ -1,34 +1,51 @@
 import { Injectable } from '@nestjs/common';
+import { Location } from 'src/model/location.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class LocationService {
-  constructor() {}
+  constructor(@InjectRepository(Location) private repo: Repository<Location>) {}
 
   async findLanguageByLocation(location: string) {
-    // TODO: Write code to get language by location using injected repos
+    const result = await this.repo.findOne({
+      where: { name: location },
+      relations: ['languages'],
+    });
 
-    return await [
-      { name: 'Java', jobListings: 10, uniqueCompanies: 10 },
-      { name: 'Python', jobListings: 9, uniqueCompanies: 9 },
-      { name: 'C', jobListings: 8, uniqueCompanies: 8 },
-      { name: 'C++', jobListings: 7, uniqueCompanies: 7 },
-      { name: 'TypeScript', jobListings: 6, uniqueCompanies: 6 },
-      { name: 'Ruby', jobListings: 5, uniqueCompanies: 5 },
-      { name: 'Dart', jobListings: 4, uniqueCompanies: 4 },
-    ];
+    if (!result) {
+      return [];
+    }
+
+    // Removes id so we can map
+    delete result.languages.id;
+    return Object.keys(result.languages).map(lang => {
+      return {
+        name: lang,
+        jobListings: result.languages[lang],
+        uniqueCompanies: result.languages[lang],
+      };
+    });
   }
 
   async findFrameworkByLocation(location: string) {
-    // TODO: Write code to get frameworks by location using injected repos
+    const result = await this.repo.findOne({
+      where: { name: location },
+      relations: ['frameworks'],
+    });
 
-    return await [
-      { name: 'Spring', jobListings: 10, uniqueCompanies: 10 },
-      { name: 'React', jobListings: 9, uniqueCompanies: 9 },
-      { name: 'Angular', jobListings: 8, uniqueCompanies: 8 },
-      { name: 'Vue', jobListings: 7, uniqueCompanies: 7 },
-      { name: 'Svelte', jobListings: 6, uniqueCompanies: 6 },
-      { name: 'Rails', jobListings: 5, uniqueCompanies: 5 },
-      { name: 'Play Framework', jobListings: 11, uniqueCompanies: 11 },
-    ];
+    if (!result) {
+      return [];
+    }
+
+    // Removes id so we can map
+    delete result.frameworks.id;
+    return Object.keys(result.frameworks).map(lang => {
+      return {
+        name: lang,
+        jobListings: result.frameworks[lang],
+        uniqueCompanies: result.frameworks[lang],
+      };
+    });
   }
 }

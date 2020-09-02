@@ -15,9 +15,9 @@ export class Languages {
   @Column({ type: 'integer', default: 0 })
   Python: number;
   @Column({ type: 'integer', default: 0 })
-  "C++": number;
+  Cpp: number;
   @Column({ type: 'integer', default: 0 })
-  'C#': number;
+  Csharp: number;
   @Column({ type: 'integer', default: 0 })
   Golang: number;
   @Column({ type: 'integer', default: 0 })
@@ -40,9 +40,6 @@ export class Languages {
   Scala: number;
   @Column({ type: 'integer', default: 0 })
   'Objective-C': number;
-
-
-
 
   // Put other languages here
 }

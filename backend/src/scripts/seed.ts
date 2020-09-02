@@ -8,7 +8,7 @@ import { UseFilters } from '@nestjs/common';
 var unirest = require('unirest');
 const cities = require('all-the-cities');
 const yourhandle = require('countrycitystatejson');
-let statemap = new Map()
+let statemap = new Map();
 statemap.set('Alaska', 'AK');
 statemap.set('Alabama', 'AL');
 statemap.set('Arkansas', 'AR');
@@ -89,22 +89,45 @@ statemap.set('West Virginia', 'WV');
 
 //   }
 
-
 // }
 // for (let city3 in array) {
 //   console.log(array[city3]);
 // }
-var testcities = [
-  'Seattle, WA'
-]
+var testcities = ['Seattle, WA'];
 
 var languages = [
   'Java',
-  'JavaScript', 'Ruby', 'Python', 'C++', 'C#', 'Golang', 'TypeScript', 'Dart', 'Haskell', 'PHP', 'Swift', 'Perl', 'Kotlin', 'Rust', 'Scala', 'Objective-C'
+  'JavaScript',
+  'Ruby',
+  'Python',
+  'C++',
+  'C#',
+  'Golang',
+  'TypeScript',
+  'Dart',
+  'Haskell',
+  'PHP',
+  'Swift',
+  'Perl',
+  'Kotlin',
+  'Rust',
+  'Scala',
+  'Objective-C',
 ];
 var frameworks = [
-  'Node.js', 'React', 'Rails', 'Angular', 'Django', 'Symfony', 'Laravel', 'Spring', 'Vue', 'Flask', 'jQuery', 'ASP.NET'
-]
+  'Node.js',
+  'React',
+  'Rails',
+  'Angular',
+  'Django',
+  'Symfony',
+  'Laravel',
+  'Spring',
+  'Vue',
+  'Flask',
+  'jQuery',
+  'ASP.NET',
+];
 
 async function run() {
   const opt = {
@@ -122,9 +145,6 @@ async function run() {
   US.type = Type.Country;
   US.frameworks = new Frameworks();
 
-  for (let language in Object.keys(US.languages)) {
-    console.log(language);
-  }
   for (let city3 in testcities) {
     const city = new Location();
     city.name = testcities[city3];
@@ -134,6 +154,13 @@ async function run() {
 
     for (let lang in languages) {
       //let total = await (callApi(languages[lang], testcities[city3]));
+      if (lang === 'C++') {
+        city.languages.Cpp = 5;
+        continue;
+      } else if (lang === 'C#') {
+        city.languages.Csharp = 5;
+        continue;
+      }
       city.languages[languages[lang]] = 5;
     }
     for (let frame in frameworks) {
@@ -144,8 +171,6 @@ async function run() {
     work.push(repo.save(city));
   }
   work.push(repo.save(US));
-
-
 
   return await Promise.all(work);
 }
@@ -168,7 +193,7 @@ function callApi(lang, city) {
       useQueryString: true,
     });
 
-    req.end(function (res) {
+    req.end(function(res) {
       if (res.error) throw new Error(res.error);
       console.log(res.body.totalResults);
       resolve(res.body.totalResults);

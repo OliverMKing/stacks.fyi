@@ -1,12 +1,12 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class myInit1598923524094 implements MigrationInterface {
-    name = 'myInit1598923524094'
+export class myInit1599009837588 implements MigrationInterface {
+    name = 'myInit1599009837588'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "city-state" ("city_id" uuid NOT NULL, "state_id" uuid NOT NULL, CONSTRAINT "PK_ed1fed2ce34e24c66db3c17d7da" PRIMARY KEY ("city_id", "state_id"))`);
-        await queryRunner.query(`CREATE TABLE "languages" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "java" integer NOT NULL DEFAULT 0, CONSTRAINT "PK_b517f827ca496b29f4d549c631d" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE TABLE "frameworks" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "spring" integer NOT NULL DEFAULT 0, CONSTRAINT "PK_23e178ce62668c9ce2036b7a3c2" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "languages" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "Java" integer NOT NULL DEFAULT 0, "JavaScript" integer NOT NULL DEFAULT 0, "Ruby" integer NOT NULL DEFAULT 0, "Python" integer NOT NULL DEFAULT 0, "Cpp" integer NOT NULL DEFAULT 0, "C#" integer NOT NULL DEFAULT 0, "Golang" integer NOT NULL DEFAULT 0, "TypeScript" integer NOT NULL DEFAULT 0, "Dart" integer NOT NULL DEFAULT 0, "Haskell" integer NOT NULL DEFAULT 0, "PHP" integer NOT NULL DEFAULT 0, "Swift" integer NOT NULL DEFAULT 0, "Perl" integer NOT NULL DEFAULT 0, "Kotlin" integer NOT NULL DEFAULT 0, "Rust" integer NOT NULL DEFAULT 0, "Scala" integer NOT NULL DEFAULT 0, "Objective-C" integer NOT NULL DEFAULT 0, CONSTRAINT "PK_b517f827ca496b29f4d549c631d" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "frameworks" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "Node.js" integer NOT NULL DEFAULT 0, "React" integer NOT NULL DEFAULT 0, "Rails" integer NOT NULL DEFAULT 0, "Angular" integer NOT NULL DEFAULT 0, "Django" integer NOT NULL DEFAULT 0, "Symfony" integer NOT NULL DEFAULT 0, "Laravel" integer NOT NULL DEFAULT 0, "Spring" integer NOT NULL DEFAULT 0, "Vue" integer NOT NULL DEFAULT 0, "Flask" integer NOT NULL DEFAULT 0, "jQuery" integer NOT NULL DEFAULT 0, "ASP.NET" integer NOT NULL DEFAULT 0, CONSTRAINT "PK_23e178ce62668c9ce2036b7a3c2" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "country" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying(300) NOT NULL, "languagesId" uuid, "frameworksId" uuid, CONSTRAINT "REL_700abdb5d2db295a208a7004e5" UNIQUE ("languagesId"), CONSTRAINT "REL_11460712e02becc189bad27817" UNIQUE ("frameworksId"), CONSTRAINT "PK_bf6e37c231c4f4ea56dcd887269" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_2c5aa339240c0c3ae97fcc9dc4" ON "country" ("name") `);
         await queryRunner.query(`CREATE TABLE "state" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying(300) NOT NULL, "languagesId" uuid, "frameworksId" uuid, "countryId" uuid, CONSTRAINT "REL_5e03de0b781635de192c045204" UNIQUE ("languagesId"), CONSTRAINT "REL_8cc5df453dfd5d3e45c32ca535" UNIQUE ("frameworksId"), CONSTRAINT "PK_549ffd046ebab1336c3a8030a12" PRIMARY KEY ("id"))`);
@@ -16,6 +16,9 @@ export class myInit1598923524094 implements MigrationInterface {
         await queryRunner.query(`CREATE TABLE "location" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying(300) NOT NULL, "type" integer NOT NULL, "languagesId" uuid, "frameworksId" uuid, CONSTRAINT "REL_c93d7c751b4f9cfc661f28fe32" UNIQUE ("languagesId"), CONSTRAINT "REL_8952578b297a14c3ec4717e7ec" UNIQUE ("frameworksId"), CONSTRAINT "PK_876d7bdba03c72251ec4c2dc827" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_f0336eb8ccdf8306e270d400cf" ON "location" ("name") `);
         await queryRunner.query(`CREATE TABLE "state-country" ("state_id" uuid NOT NULL, "country_id" uuid NOT NULL, CONSTRAINT "PK_9c53286ad20f5b8b0620f25ea67" PRIMARY KEY ("state_id", "country_id"))`);
+        await queryRunner.query(`ALTER TABLE "languages" DROP COLUMN "C#"`);
+        await queryRunner.query(`ALTER TABLE "languages" ADD "C#" integer NOT NULL DEFAULT 0`);
+        await queryRunner.query(`ALTER TABLE "languages" ADD "Csharp" integer NOT NULL DEFAULT 0`);
         await queryRunner.query(`ALTER TABLE "country" ADD CONSTRAINT "FK_700abdb5d2db295a208a7004e55" FOREIGN KEY ("languagesId") REFERENCES "languages"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "country" ADD CONSTRAINT "FK_11460712e02becc189bad278179" FOREIGN KEY ("frameworksId") REFERENCES "frameworks"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "state" ADD CONSTRAINT "FK_5e03de0b781635de192c0452044" FOREIGN KEY ("languagesId") REFERENCES "languages"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
@@ -39,6 +42,9 @@ export class myInit1598923524094 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "state" DROP CONSTRAINT "FK_5e03de0b781635de192c0452044"`);
         await queryRunner.query(`ALTER TABLE "country" DROP CONSTRAINT "FK_11460712e02becc189bad278179"`);
         await queryRunner.query(`ALTER TABLE "country" DROP CONSTRAINT "FK_700abdb5d2db295a208a7004e55"`);
+        await queryRunner.query(`ALTER TABLE "languages" DROP COLUMN "Csharp"`);
+        await queryRunner.query(`ALTER TABLE "languages" DROP COLUMN "C#"`);
+        await queryRunner.query(`ALTER TABLE "languages" ADD "C#" integer NOT NULL DEFAULT 0`);
         await queryRunner.query(`DROP TABLE "state-country"`);
         await queryRunner.query(`DROP INDEX "IDX_f0336eb8ccdf8306e270d400cf"`);
         await queryRunner.query(`DROP TABLE "location"`);

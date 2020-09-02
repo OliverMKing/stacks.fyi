@@ -56,7 +56,11 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
     return <div></div>;
 
   // Handles error. TODO: Handle different errors better
-  if (error) {
+  if (
+    error ||
+    data.languageByLocation.length < 3 ||
+    data.frameworkByLocation.length < 3
+  ) {
     return (
       <div className="bg-gray-100 min-h-screen pb-3">
         <div className="w-full container mx-auto">
@@ -171,10 +175,9 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
       xAxis: { type: "value" },
       yAxis: { type: "category" },
       grid: {
-        height: data.length * 35,
+        //height: data.length * 20,
         containLabel: true,
-        bottom: 20,
-        top: 20,
+        height: "auto",
       },
       series: [
         {
