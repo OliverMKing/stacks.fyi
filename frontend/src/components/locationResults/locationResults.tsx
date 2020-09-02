@@ -175,9 +175,9 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
       xAxis: { type: "value" },
       yAxis: { type: "category" },
       grid: {
-        //height: data.length * 20,
+        top: 30,
+        height: data.length * 30,
         containLabel: true,
-        height: "auto",
       },
       series: [
         {
@@ -221,6 +221,10 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
                 ]),
                 "#3182ce"
               )}
+              style={{
+                // Calculation for height based on bar height
+                height: (languages as Language[]).length * 30 + 90 + "px",
+              }}
             />
 
             <h1 className="w-full my-2 pt-16 text-4xl font-bold leading-tight text-center text-gray-800">
@@ -239,6 +243,10 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
                 ]),
                 "#fc8181"
               )}
+              style={{
+                // Calculation for height based on bar height
+                height: (frameworks as Framework[]).length * 30 + 90 + "px",
+              }}
             />
           </section>
         </div>
