@@ -6,6 +6,7 @@ import * as QueryString from "query-string";
 import settings from "./settings.png";
 import ReactEcharts from "echarts-for-react";
 import { EChartOption } from "echarts";
+import { HashLink as Link } from "react-router-hash-link";
 
 interface Language {
   name: string;
@@ -56,11 +57,7 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
     return <div></div>;
 
   // Handles error. TODO: Handle different errors better
-  if (
-    error ||
-    data.languageByLocation.length < 3 ||
-    data.frameworkByLocation.length < 3
-  ) {
+  if (error) {
     return (
       <div className="bg-gray-100 min-h-screen pb-3">
         <div className="w-full container mx-auto">
@@ -74,6 +71,62 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
             </h3>
             <div className="w-full md:w-3/4 lg:w-3/5 mx-auto">
               <img src={settings}></img>
+            </div>
+          </div>
+        </div>
+        <div className="container max-w-5xl text-center mx-auto mt-4 py-4 sm:border-t">
+          <p className="text-gray-600">
+            © Stacks.fyi 2020. All Rights Reserved.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Handle no location found error
+  if (
+    data.languageByLocation.length < 3 ||
+    data.frameworkByLocation.length < 3
+  ) {
+    return (
+      <div className="bg-gray-100 min-h-screen pb-3">
+        <div className="w-full container mx-auto">
+          <NavbarComponent />
+          <div className="container max-w-5xl mx-auto m-8 pt-8">
+            <h1 className="w-full my-2 text-4xl font-bold leading-tight text-center text-gray-800">
+              Location Not Found
+            </h1>
+            <h3 className="break-normal font-normal text-gray-800 text-center text-xl">
+              We do not have information for the location "{params.q}".{" "}
+              <Link className="text-blue-600" to="/location-search">
+                Try another search?
+              </Link>
+            </h3>
+            <div className="md:w-4/5 m-auto">
+              <p className="mx-4 text-gray-600 pt-10">
+                Remember that we only have information for the United States.
+                Cities must be entered in the City, StateAbbr format (ex:
+                Raleigh, NC). Only cities with a population over 100,000 people
+                are supported.
+              </p>
+              <p className="mx-4 text-gray-600 pt-3">
+                States and countries must be spelled out fully (ex: North
+                Carolina or United States). Washington, D.C. can be referenced
+                as Washington, D.C.
+              </p>
+              <p className="mx-4 text-gray-600 pt-3">
+                Need inspiration? You can check out{" "}
+                <Link
+                  className="text-blue-600"
+                  to="/location-search#common-searches"
+                >
+                  popular searches here
+                </Link>
+                .
+              </p>
+              <div className="w-full md:w-3/4 lg:w-3/5 mx-auto">
+                <img src={settings}></img>
+              </div>
             </div>
           </div>
         </div>

@@ -66,7 +66,10 @@ const LocationSearchComponent: React.FC = () => {
             </form>
           </div>
           <div className="w-full pt-24">
-            <h1 className="w-full my-2 text-4xl font-bold leading-tight text-center text-gray-800">
+            <h1
+              className="w-full my-2 text-4xl font-bold leading-tight text-center text-gray-800"
+              id="common-searches"
+            >
               Common searches
             </h1>
             <div className="flex flex-wrap pt-4 content-center">
