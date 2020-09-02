@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import analyse from "./analyse.svg";
 import blob from "./blob.svg";
 import support from "./support.svg";
 import settings from "./settings.svg";
 import NavbarComponent from "../navbar/Navbar";
+import { useHistory } from "react-router-dom";
 
 const IndexComponent: React.FC = () => {
+  const history = useHistory();
+  const [searchparam, setsearchparam] = useState("");
+
+  const changeSearch = ({ target }: { target: any }) => {
+    setsearchparam(target.value);
+  };
+
+  const submitform = () => {
+    history.push("/location-results/:?q=" + searchparam);
+  };
+
   return (
     <div
       className="bg-cover bg-gray-100"
@@ -75,9 +87,10 @@ const IndexComponent: React.FC = () => {
             Search by location
           </h3>
           <div className="w-full text-center pt-4">
-            <form action="#">
+            <form onSubmit={submitform}>
               <div className="max-w-xs md:max-w-sm mx-auto p-1 bg-white rounded shadow flex flex-wrap items-center">
                 <input
+                  onChange={changeSearch}
                   type="text"
                   placeholder="Location (Ex: Raleigh, NC)"
                   className="flex-1 appearance-none p-3 text-gray-600 mr-2"

@@ -7,8 +7,6 @@ interface Search {
 }
 
 const LocationSearchComponent: React.FC = () => {
-  const history = useHistory();
-
   // Describes common searches, add new ones here
   const commonSearches: Search[] = [
     { name: "United States" },
@@ -24,14 +22,18 @@ const LocationSearchComponent: React.FC = () => {
     { name: "Boston, MA" },
     { name: "Seattle, WA" },
   ];
-  const [searchparam, setsearchparam] = useState("test");
+
+  const history = useHistory();
+  const [searchparam, setsearchparam] = useState("");
+
   const changeSearch = ({ target }: { target: any }) => {
     setsearchparam(target.value);
-    console.log(searchparam);
   };
+
   const submitform = () => {
     history.push("/location-results/:?q=" + searchparam);
   };
+
   return (
     <div className="bg-gray-100 min-h-screen pb-3">
       <div className="w-full container mx-auto">
@@ -65,6 +67,10 @@ const LocationSearchComponent: React.FC = () => {
               </div>
             </form>
           </div>
+          <p className="text-gray-600 pt-4 text-center">
+            Note: Currently, only locations in the United States are supported.
+          </p>
+
           <div className="w-full pt-24">
             <h1
               className="w-full my-2 text-4xl font-bold leading-tight text-center text-gray-800"

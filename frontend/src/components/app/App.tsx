@@ -5,13 +5,7 @@ import LocationSearchComponent from "../locationSearch/LocationSearch";
 import LocationResultsComponent from "../locationResults/locationResults";
 import IndexComponent from "../index/Index";
 import NotFoundComponent from "../notFound/NotFound";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 const client = new ApolloClient({
   uri: "http://localhost:3001/graphql",
