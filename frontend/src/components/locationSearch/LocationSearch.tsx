@@ -47,16 +47,16 @@ const LocationSearchComponent: React.FC = () => {
           </h3>
           <div className="w-full pt-8">
             <form onSubmit={submitform}>
-              <div className="max-w-xs md:max-w-xl mx-auto p-1 bg-white rounded shadow flex flex-wrap items-center">
+              <div className="max-w-xs md:max-w-xl mx-auto p-1 bg-white rounded shadow flex flex-no-wrap items-center">
                 <input
                   onChange={changeSearch}
                   type="text"
                   placeholder="Location (Ex: Raleigh, NC)"
-                  className="flex-1 appearance-none p-3 text-gray-600 mr-2"
+                  className="flex-auto appearance-none p-3 text-gray-600 mr-2"
                 />
                 <button
                   type="submit"
-                  className="flex-2 block md:inline-block appearance-none bg-blue-600 text-white text-base font-semibold tracking-wider p-3 rounded hover:bg-blue-500"
+                  className="flex-auto block md:inline-block appearance-none bg-blue-600 text-white text-base font-semibold tracking-wider p-3 rounded hover:bg-blue-500"
                   onClick={() =>
                     (window.location.href =
                       "/location-results/:?q=" + searchparam)

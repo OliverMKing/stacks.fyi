@@ -96,7 +96,7 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
             <h1 className="w-full my-2 text-4xl font-bold leading-tight text-center text-gray-800">
               Location Not Found
             </h1>
-            <h3 className="break-normal font-normal text-gray-800 text-center text-xl">
+            <h3 className="break-normal px-2 font-normal text-gray-800 text-center text-xl">
               We do not have information for the location "{params.q}".{" "}
               <Link className="text-blue-600" to="/location-search">
                 Try another search?
@@ -280,7 +280,7 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
               }}
             />
 
-            <h1 className="w-full my-2 pt-16 text-4xl font-bold leading-tight text-center text-gray-800">
+            <h1 className="w-full my-2 px-2 pt-16 text-4xl font-bold leading-tight text-center text-gray-800">
               Frameworks and tools
             </h1>
             {ranking(
