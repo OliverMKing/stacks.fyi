@@ -84,7 +84,7 @@ const IndexComponent: React.FC = () => {
         </h3>
         <div className="w-full text-center pt-4">
           <form onSubmit={submitform}>
-            <div className="max-w-xs md:max-w-sm mx-auto p-1 bg-white rounded shadow flex flex-no-wrap items-center">
+            <div className="max-w-xs md:max-w-sm mx-auto p-1 bg-white rounded shadow flex items-center">
               <input
                 onChange={changeSearch}
                 type="text"

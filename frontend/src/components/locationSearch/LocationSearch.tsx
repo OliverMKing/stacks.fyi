@@ -47,7 +47,7 @@ const LocationSearchComponent: React.FC = () => {
           </h3>
           <div className="w-full pt-8">
             <form onSubmit={submitform}>
-              <div className="max-w-xs md:max-w-xl mx-auto p-1 bg-white rounded shadow flex flex-no-wrap items-center">
+              <div className="max-w-xs md:max-w-xl mx-auto p-1 bg-white rounded shadow flex items-center">
                 <input
                   onChange={changeSearch}
                   type="text"
@@ -67,7 +67,7 @@ const LocationSearchComponent: React.FC = () => {
               </div>
             </form>
           </div>
-          <p className="text-gray-600 pt-4 text-center">
+          <p className="text-gray-600 pt-4 px-2 text-center">
             Note: Currently, only locations in the United States are supported.
           </p>
 
