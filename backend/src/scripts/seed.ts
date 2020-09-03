@@ -60,40 +60,40 @@ statemap.set('Wisconsin', 'WI');
 statemap.set('Wyoming', 'WY');
 statemap.set('West Virginia', 'WV');
 
-// let states = yourhandle.getCountryByShort('US').states;
-// let count = 0;
-// var array = [];
-// for (let state in states) {
-//   console.log(state);
-//   let cities2 = yourhandle.getCities('US', state);
-//   for (let city in cities2) {
-//     let varry = cities2[city];
-//     // console.log(cities2[city]);
-//     let thecity = cities.filter(city => city.name.match(varry));
-//     try {
-//       for (let eachcity in thecity) {
-//         let cityabrev = statemap.get(state);
+let states = yourhandle.getCountryByShort('US').states;
+let count = 0;
+var array = [];
+for (let state in states) {
+  console.log(state);
+  let cities2 = yourhandle.getCities('US', state);
+  for (let city in cities2) {
+    let varry = cities2[city];
+    // console.log(cities2[city]);
+    let thecity = cities.filter(city => city.name.match(varry));
+    try {
+      for (let eachcity in thecity) {
+        let cityabrev = statemap.get(state);
 
-//         if (thecity[eachcity].population > 100000 && thecity[eachcity].country == 'US' && thecity[eachcity].adminCode == cityabrev) {
-//           //  console.log("-------------------BIG CITY------------------")
-//           //  console.log(thecity[eachcity]);
-//           array.push(thecity[eachcity].name + ", " + thecity[eachcity].adminCode);
-//           count += 1;
-//         }
-//       }
+        if (thecity[eachcity].population > 100000 && thecity[eachcity].country == 'US' && thecity[eachcity].adminCode == cityabrev) {
+          //  console.log("-------------------BIG CITY------------------")
+          //  console.log(thecity[eachcity]);
+          array.push(thecity[eachcity].name + ", " + thecity[eachcity].adminCode);
+          count += 1;
+        }
+      }
 
-//     }
-//     catch{
+    }
+    catch{
 
-//     }
+    }
 
-//   }
+  }
 
-// }
-// for (let city3 in array) {
-//   console.log(array[city3]);
-// }
-var testcities = ['Seattle, WA'];
+}
+for (let city3 in array) {
+  console.log(array[city3]);
+}
+
 
 var languages = [
   'Java',
@@ -145,27 +145,24 @@ async function run() {
   US.type = Type.Country;
   US.frameworks = new Frameworks();
 
-  for (let city3 in testcities) {
+  for (let city3 in array) {
     const city = new Location();
-    city.name = testcities[city3];
+    city.name = array[city3];
     city.languages = new Languages();
     city.type = Type.City;
     city.frameworks = new Frameworks();
 
     for (let lang in languages) {
       //let total = await (callApi(languages[lang], testcities[city3]));
-      if (lang === 'C++') {
-        city.languages.Cpp = 5;
-        continue;
-      } else if (lang === 'C#') {
-        city.languages.Csharp = 5;
-        continue;
-      }
-      city.languages[languages[lang]] = 5;
+
+
+
+      city.languages[languages[lang]] = 74585;
     }
     for (let frame in frameworks) {
       //let total = await (callApi(frameworks[frame], testcities[city3]));
-      city.frameworks[frameworks[frame]] = 4;
+      let b = Math.random() * 10;
+      city.frameworks[frameworks[frame]] = 54812;
     }
 
     work.push(repo.save(city));
@@ -193,7 +190,7 @@ function callApi(lang, city) {
       useQueryString: true,
     });
 
-    req.end(function(res) {
+    req.end(function (res) {
       if (res.error) throw new Error(res.error);
       console.log(res.body.totalResults);
       resolve(res.body.totalResults);
