@@ -43,7 +43,7 @@ const IndexComponent: React.FC = () => {
         </h1>
 
         <div className="flex flex-wrap">
-          <div className="w-5/6 sm:w-1/2 p-6 pb-0">
+          <div className="w-full sm:w-1/2 p-6 pb-0">
             <h3 className="text-3xl text-gray-800 leading-none mb-3">
               Search by location
             </h3>
@@ -93,7 +93,7 @@ const IndexComponent: React.FC = () => {
               />
               <button
                 type="submit"
-                className="flex-auto block md:inline-block appearance-none bg-blue-600 text-white text-base font-semibold tracking-wider p-3 rounded hover:bg-blue-500"
+                className="flex-auto inline-block appearance-none bg-blue-600 text-white text-base font-semibold tracking-wider p-3 rounded hover:bg-blue-500"
               >
                 Search
               </button>

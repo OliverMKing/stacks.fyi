@@ -56,7 +56,7 @@ const LocationSearchComponent: React.FC = () => {
                 />
                 <button
                   type="submit"
-                  className="flex-auto block md:inline-block appearance-none bg-blue-600 text-white text-base font-semibold tracking-wider p-3 rounded hover:bg-blue-500"
+                  className="flex-auto inline-block appearance-none bg-blue-600 text-white text-base font-semibold tracking-wider p-3 rounded hover:bg-blue-500"
                   onClick={() =>
                     (window.location.href =
                       "/location-results/:?q=" + searchparam)
