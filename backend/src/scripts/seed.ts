@@ -8,7 +8,9 @@ import { UseFilters } from '@nestjs/common';
 import { Console } from 'console';
 var unirest = require('unirest');
 const cities = require('all-the-cities');
-const yourhandle = require('countrycitystatejson');
+const countrycitystate = require('countrycitystatejson');
+
+// Create a map of states and abbreviations
 let statemap = new Map();
 statemap.set('Alaska', 'AK');
 statemap.set('Alabama', 'AL');
@@ -60,48 +62,14 @@ statemap.set('Washington', 'WA');
 statemap.set('Wisconsin', 'WI');
 statemap.set('Wyoming', 'WY');
 statemap.set('West Virginia', 'WV');
-let statearr = [];
-let states = yourhandle.getCountryByShort('US').states;
-let count = 0;
-var array = [];
-for (let state in states) {
-  console.log(state);
-  let cities2 = yourhandle.getCities('US', state);
-  for (let city in cities2) {
-    let varry = cities2[city];
-    // console.log(cities2[city]);
-    let thecity = cities.filter(city => city.name.match(varry));
-    try {
-      for (let eachcity in thecity) {
-        let cityabrev = statemap.get(state);
-
-        if (
-          thecity[eachcity].population > 100000 &&
-          thecity[eachcity].country == 'US' &&
-          thecity[eachcity].adminCode == cityabrev
-        ) {
-          //  console.log("-------------------BIG CITY------------------")
-          //  console.log(thecity[eachcity]);
-          array.push(
-            thecity[eachcity].name + ', ' + thecity[eachcity].adminCode,
-          );
-          count += 1;
-        }
-      }
-    } catch {}
-  }
-}
-for (let city3 in array) {
-  console.log(array[city3]);
-}
 
 var languages = [
   'Java',
   'JavaScript',
   'Ruby',
   'Python',
-  'C++',
-  'C#',
+  'Cpp',
+  'Csharp',
   'Golang',
   'TypeScript',
   'Dart',
@@ -112,7 +80,7 @@ var languages = [
   'Kotlin',
   'Rust',
   'Scala',
-  'Objective-C',
+  'ObjectiveC',
 ];
 var frameworks = [
   'Node.js',
@@ -135,84 +103,90 @@ async function run() {
     debug: true,
   };
   const connection = await createConnection(opt as ConnectionOptions);
-
   const repo = connection.getRepository(Location);
 
+  // Push all db actions to work so we can return a promise
   let work = [];
+
   const US = new Location();
   US.name = 'United States';
   US.languages = new Languages();
   US.type = Type.Country;
   US.frameworks = new Frameworks();
 
-  for (let city3 in array) {
-    const state = getState(array[city3]);
-    const city = new Location();
-    city.name = array[city3];
-    city.languages = new Languages();
-    city.type = Type.City;
-    city.frameworks = new Frameworks();
+  let states = countrycitystate.getCountryByShort('US').states;
+  // Loops through states
+  for (let state in states) {
+    let cities2 = countrycitystate.getCities('US', state);
 
-    for (let lang in languages) {
-      //let total = await (callApi(languages[lang], testcities[city3]));
+    // Create state
+    const stateLoc = new Location();
+    stateLoc.name = state;
+    stateLoc.languages = new Languages();
+    stateLoc.frameworks = new Frameworks();
+    stateLoc.type = Type.State;
 
-      city.languages[languages[lang]] = 74585;
-      let vartotal =
-        city.languages[languages[lang]].value +
-        state.languages[languages[lang]].value;
-      console.log(vartotal);
-      state.languages[languages[lang]] = vartotal;
+    console.log('Adding state', stateLoc.name, '------------');
+
+    for (let city in cities2) {
+      let varry = cities2[city];
+      let citiesInState = cities.filter(city => city.name.match(varry));
+      try {
+        for (let eachcity in citiesInState) {
+          let cityabrev = statemap.get(state);
+
+          if (
+            citiesInState[eachcity].population > 100000 &&
+            citiesInState[eachcity].country == 'US' &&
+            citiesInState[eachcity].adminCode == cityabrev
+          ) {
+            // TODO: Add city to db
+            const city = new Location();
+            city.name =
+              citiesInState[eachcity].name +
+              ', ' +
+              citiesInState[eachcity].adminCode;
+            city.languages = new Languages();
+            city.type = Type.City;
+            city.frameworks = new Frameworks();
+
+            console.log('Adding city', city.name);
+
+            for (let lang of languages) {
+              //const  total = await (callApi(languages[lang], testcities[city3]));
+              const total = 1;
+              city.languages[lang] = total;
+
+              // Update State and US
+              stateLoc.languages[lang] += total;
+              US.languages[lang] += total;
+            }
+            for (let frame of frameworks) {
+              //const total = await (callApi(frameworks[frame], testcities[city3]));
+              const total = 1;
+              city.frameworks[frame] = total;
+
+              // Update State and US
+              stateLoc.frameworks[frame] += total;
+              US.frameworks[frame] += total;
+            }
+
+            // Save city
+            work.push(repo.save(city));
+          }
+        }
+      } catch {}
     }
-    for (let frame in frameworks) {
-      //let total = await (callApi(frameworks[frame], testcities[city3]));
-      let b = Math.random() * 10;
-      city.frameworks[frameworks[frame]] = 54812;
-      let vartotal =
-        city.frameworks[frameworks[frame]].value +
-        state.frameworks[frameworks[frame]].value;
-      console.log(vartotal);
-      state.frameworks[frameworks[frame]] = vartotal;
-    }
-
-    work.push(repo.save(city));
-  }
-  for (let States in statearr) {
-    work.push(repo.save(statearr[States]));
+    work.push(repo.save(stateLoc));
+    console.log(stateLoc.languages);
   }
   work.push(repo.save(US));
 
   return await Promise.all(work);
 }
-function getState(city) {
-  // console.log(city);
-  let arr: any[] = city.split(', ');
-  // console.log(arr[0]);
-  //console.log(arr[1]);
-  //console.log(city.split(', ')[1]);
-  for (let state in statearr) {
-    let name = getKeyByValue(statemap, arr[1]);
-    if (statearr[state].name == name) {
-      // console.log('Already found state in db');
-      return statearr[state];
-    }
-  }
 
-  let name = getKeyByValue(statemap, arr[1]);
-  const State1 = new Location();
-  State1.name = name;
-  State1.languages = new Languages();
-  State1.type = Type.State;
-  State1.frameworks = new Frameworks();
-  statearr.push(State1);
-
-  return State1;
-}
-function getKeyByValue(object, value) {
-  return Object.keys(object).find(key => object[key] === value);
-}
 function callApi(lang, city) {
   var req = unirest('GET', 'https://indeed-com.p.rapidapi.com/search/jobs');
-  console.log(lang);
   return new Promise(resolve => {
     req.query({
       sort: 'relevance',
@@ -231,7 +205,6 @@ function callApi(lang, city) {
 
     req.end(function(res) {
       if (res.error) throw new Error(res.error);
-      console.log(res.body.totalResults);
       resolve(res.body.totalResults);
     });
   });

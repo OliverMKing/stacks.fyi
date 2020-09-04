@@ -6,32 +6,29 @@ export class Frameworks {
   id: string;
 
   @Column({ type: 'integer', default: 0 })
-  'Node.js': number;
+  'Node.js': number = 0;
   @Column({ type: 'integer', default: 0 })
-  React: number;
+  React: number = 0;
   @Column({ type: 'integer', default: 0 })
-  Rails: number;
+  Rails: number = 0;
   @Column({ type: 'integer', default: 0 })
-  Angular: number;
+  Angular: number = 0;
   @Column({ type: 'integer', default: 0 })
-  Django: number;
+  Django: number = 0;
   @Column({ type: 'integer', default: 0 })
-  Symfony: number;
+  Symfony: number = 0;
   @Column({ type: 'integer', default: 0 })
-  Laravel: number;
+  Laravel: number = 0;
   @Column({ type: 'integer', default: 0 })
-  Spring: number;
+  Spring: number = 0;
   @Column({ type: 'integer', default: 0 })
   Vue: number;
   @Column({ type: 'integer', default: 0 })
-  Flask: number;
+  Flask: number = 0;
   @Column({ type: 'integer', default: 0 })
-  jQuery: number;
+  jQuery: number = 0;
   @Column({ type: 'integer', default: 0 })
-  'ASP.NET': number;
-
-
-
+  'ASP.NET': number = 0;
 
   // Put other frameworks here
 }

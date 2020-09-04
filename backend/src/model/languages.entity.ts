@@ -6,40 +6,40 @@ export class Languages {
   id: string;
 
   @Column({ type: 'integer', default: 0 })
-  Java: number;
+  Java: number = 0;
 
   @Column({ type: 'integer', default: 0 })
-  JavaScript: number;
+  JavaScript: number = 0;
   @Column({ type: 'integer', default: 0 })
-  Ruby: number;
+  Ruby: number = 0;
   @Column({ type: 'integer', default: 0 })
-  Python: number;
+  Python: number = 0;
   @Column({ type: 'integer', default: 0 })
-  Cpp: number;
+  Cpp: number = 0;
   @Column({ type: 'integer', default: 0 })
-  Csharp: number;
+  Csharp: number = 0;
   @Column({ type: 'integer', default: 0 })
-  Golang: number;
+  Golang: number = 0;
   @Column({ type: 'integer', default: 0 })
-  TypeScript: number;
+  TypeScript: number = 0;
   @Column({ type: 'integer', default: 0 })
-  Dart: number;
+  Dart: number = 0;
   @Column({ type: 'integer', default: 0 })
-  Haskell: number;
+  Haskell: number = 0;
   @Column({ type: 'integer', default: 0 })
-  PHP: number;
+  PHP: number = 0;
   @Column({ type: 'integer', default: 0 })
-  Swift: number;
+  Swift: number = 0;
   @Column({ type: 'integer', default: 0 })
-  Perl: number;
+  Perl: number = 0;
   @Column({ type: 'integer', default: 0 })
-  Kotlin: number;
+  Kotlin: number = 0;
   @Column({ type: 'integer', default: 0 })
-  Rust: number;
+  Rust: number = 0;
   @Column({ type: 'integer', default: 0 })
-  Scala: number;
+  Scala: number = 0;
   @Column({ type: 'integer', default: 0 })
-  'Objective-C': number;
+  ObjectiveC: number = 0;
 
   // Put other languages here
 }
