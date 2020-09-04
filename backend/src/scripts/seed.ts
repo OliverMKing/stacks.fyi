@@ -83,7 +83,7 @@ var languages = [
   'ObjectiveC',
 ];
 var frameworks = [
-  'Node.js',
+  'Nodejs',
   'React',
   'Rails',
   'Angular',
@@ -94,7 +94,7 @@ var frameworks = [
   'Vue',
   'Flask',
   'jQuery',
-  'ASP.NET',
+  'ASPNET',
 ];
 
 async function run() {
@@ -178,7 +178,6 @@ async function run() {
       } catch {}
     }
     work.push(repo.save(stateLoc));
-    console.log(stateLoc.languages);
   }
   work.push(repo.save(US));
 

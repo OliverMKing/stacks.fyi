@@ -1,7 +1,7 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class myInit1599242223105 implements MigrationInterface {
-    name = 'myInit1599242223105'
+export class myInit1599248686089 implements MigrationInterface {
+    name = 'myInit1599248686089'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "city-state" ("city_id" uuid NOT NULL, "state_id" uuid NOT NULL, CONSTRAINT "PK_ed1fed2ce34e24c66db3c17d7da" PRIMARY KEY ("city_id", "state_id"))`);
@@ -16,8 +16,14 @@ export class myInit1599242223105 implements MigrationInterface {
         await queryRunner.query(`CREATE TABLE "location" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying(300) NOT NULL, "type" integer NOT NULL, "languagesId" uuid, "frameworksId" uuid, CONSTRAINT "REL_c93d7c751b4f9cfc661f28fe32" UNIQUE ("languagesId"), CONSTRAINT "REL_8952578b297a14c3ec4717e7ec" UNIQUE ("frameworksId"), CONSTRAINT "PK_876d7bdba03c72251ec4c2dc827" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_f0336eb8ccdf8306e270d400cf" ON "location" ("name") `);
         await queryRunner.query(`CREATE TABLE "state-country" ("state_id" uuid NOT NULL, "country_id" uuid NOT NULL, CONSTRAINT "PK_9c53286ad20f5b8b0620f25ea67" PRIMARY KEY ("state_id", "country_id"))`);
+        await queryRunner.query(`ALTER TABLE "frameworks" DROP COLUMN "Node.js"`);
+        await queryRunner.query(`ALTER TABLE "frameworks" DROP COLUMN "ASP.NET"`);
         await queryRunner.query(`ALTER TABLE "languages" DROP COLUMN "Objective-C"`);
         await queryRunner.query(`ALTER TABLE "languages" ADD "Objective-C" integer NOT NULL DEFAULT 0`);
+        await queryRunner.query(`ALTER TABLE "frameworks" ADD "Node.js" integer NOT NULL DEFAULT 0`);
+        await queryRunner.query(`ALTER TABLE "frameworks" ADD "ASP.NET" integer NOT NULL DEFAULT 0`);
+        await queryRunner.query(`ALTER TABLE "frameworks" ADD "Nodejs" integer NOT NULL DEFAULT 0`);
+        await queryRunner.query(`ALTER TABLE "frameworks" ADD "ASPNET" integer NOT NULL DEFAULT 0`);
         await queryRunner.query(`ALTER TABLE "languages" ADD "ObjectiveC" integer NOT NULL DEFAULT 0`);
         await queryRunner.query(`ALTER TABLE "country" ADD CONSTRAINT "FK_700abdb5d2db295a208a7004e55" FOREIGN KEY ("languagesId") REFERENCES "languages"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "country" ADD CONSTRAINT "FK_11460712e02becc189bad278179" FOREIGN KEY ("frameworksId") REFERENCES "frameworks"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
@@ -43,8 +49,14 @@ export class myInit1599242223105 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "country" DROP CONSTRAINT "FK_11460712e02becc189bad278179"`);
         await queryRunner.query(`ALTER TABLE "country" DROP CONSTRAINT "FK_700abdb5d2db295a208a7004e55"`);
         await queryRunner.query(`ALTER TABLE "languages" DROP COLUMN "ObjectiveC"`);
+        await queryRunner.query(`ALTER TABLE "frameworks" DROP COLUMN "ASPNET"`);
+        await queryRunner.query(`ALTER TABLE "frameworks" DROP COLUMN "Nodejs"`);
+        await queryRunner.query(`ALTER TABLE "frameworks" DROP COLUMN "ASP.NET"`);
+        await queryRunner.query(`ALTER TABLE "frameworks" DROP COLUMN "Node.js"`);
         await queryRunner.query(`ALTER TABLE "languages" DROP COLUMN "Objective-C"`);
         await queryRunner.query(`ALTER TABLE "languages" ADD "Objective-C" integer NOT NULL DEFAULT 0`);
+        await queryRunner.query(`ALTER TABLE "frameworks" ADD "ASP.NET" integer NOT NULL DEFAULT 0`);
+        await queryRunner.query(`ALTER TABLE "frameworks" ADD "Node.js" integer NOT NULL DEFAULT 0`);
         await queryRunner.query(`DROP TABLE "state-country"`);
         await queryRunner.query(`DROP INDEX "IDX_f0336eb8ccdf8306e270d400cf"`);
         await queryRunner.query(`DROP TABLE "location"`);

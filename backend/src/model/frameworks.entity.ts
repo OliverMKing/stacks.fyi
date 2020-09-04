@@ -6,7 +6,7 @@ export class Frameworks {
   id: string;
 
   @Column({ type: 'integer', default: 0 })
-  'Node.js': number = 0;
+  Nodejs: number = 0;
   @Column({ type: 'integer', default: 0 })
   React: number = 0;
   @Column({ type: 'integer', default: 0 })
@@ -22,13 +22,13 @@ export class Frameworks {
   @Column({ type: 'integer', default: 0 })
   Spring: number = 0;
   @Column({ type: 'integer', default: 0 })
-  Vue: number;
+  Vue: number = 0;
   @Column({ type: 'integer', default: 0 })
   Flask: number = 0;
   @Column({ type: 'integer', default: 0 })
   jQuery: number = 0;
   @Column({ type: 'integer', default: 0 })
-  'ASP.NET': number = 0;
+  ASPNET: number = 0;
 
   // Put other frameworks here
 }
