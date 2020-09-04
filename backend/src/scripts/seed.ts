@@ -153,7 +153,7 @@ async function run() {
             console.log('Adding city', city.name);
 
             for (let lang of languages) {
-              //const  total = await (callApi(languages[lang], testcities[city3]));
+              //const  total = await (callApi(lang, city.name));
               const total = 1;
               city.languages[lang] = total;
 
@@ -162,7 +162,7 @@ async function run() {
               US.languages[lang] += total;
             }
             for (let frame of frameworks) {
-              //const total = await (callApi(frameworks[frame], testcities[city3]));
+              //const total = await (callApi(frame, city.name));
               const total = 1;
               city.frameworks[frame] = total;
 
@@ -179,6 +179,31 @@ async function run() {
     }
     work.push(repo.save(stateLoc));
   }
+
+  // Exception for D.C.
+  const DC = new Location();
+  DC.name = 'Washington, D.C.';
+  DC.languages = new Languages();
+  DC.frameworks = new Frameworks();
+  DC.type = Type.City;
+  for (let lang of languages) {
+    //const  total = await (callApi(lang, DC.name));
+    const total = 1;
+    DC.languages[lang] = total;
+
+    // Update  US
+    US.languages[lang] += total;
+  }
+  for (let frame of frameworks) {
+    //const total = await (callApi(frame, DC.name));
+    const total = 1;
+    DC.frameworks[frame] = total;
+
+    // Update  US
+    US.frameworks[frame] += total;
+  }
+  work.push(repo.save(DC));
+
   work.push(repo.save(US));
 
   return await Promise.all(work);
