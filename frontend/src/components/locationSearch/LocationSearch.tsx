@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import NavbarComponent from "../navbar/Navbar";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 interface Search {
   name: string;
@@ -57,10 +57,6 @@ const LocationSearchComponent: React.FC = () => {
                 <button
                   type="submit"
                   className="flex-auto inline-block appearance-none bg-blue-600 text-white text-base font-semibold tracking-wider p-3 rounded hover:bg-blue-500"
-                  onClick={() =>
-                    (window.location.href =
-                      "/location-results/:?q=" + searchparam)
-                  }
                 >
                   Search
                 </button>
@@ -68,7 +64,8 @@ const LocationSearchComponent: React.FC = () => {
             </form>
           </div>
           <p className="text-gray-600 pt-4 px-2 text-center">
-            Note: Currently, only locations in the United States are supported.
+            Note: Currently, only locations with populations over 10,000 in the
+            United States are supported.
           </p>
 
           <div className="w-full pt-24">
@@ -82,15 +79,11 @@ const LocationSearchComponent: React.FC = () => {
               {commonSearches.map((search) => {
                 return (
                   <div className="w-1/2 md:w-1/3 p-3">
-                    <button
-                      className="w-full bg-gray-200 hover:bg-gray-300 p-4 rounded"
-                      onClick={() =>
-                        (window.location.href =
-                          "/location-results/:?q=" + search.name)
-                      }
-                    >
-                      {search.name}
-                    </button>
+                    <Link to={"/location-results/:?q=" + search.name}>
+                      <button className="w-full bg-gray-200 hover:bg-gray-300 p-4 rounded">
+                        {search.name}
+                      </button>
+                    </Link>
                   </div>
                 );
               })}

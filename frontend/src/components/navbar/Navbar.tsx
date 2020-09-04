@@ -10,10 +10,7 @@ const NavbarComponent: React.FC = () => {
       <div className="block sm:hidden block flex items-center w-auto">
         <div className="flex-grow">
           <Link to="/location-search">
-            <button
-              id="navAction"
-              className="mx-auto bg-red-400 hover:bg-red-500 text-white text-sm rounded py-2 px-4 shadow"
-            >
+            <button className="mx-auto bg-red-400 hover:bg-red-500 text-white text-sm rounded py-2 px-4 shadow">
               By Location
             </button>
           </Link>
