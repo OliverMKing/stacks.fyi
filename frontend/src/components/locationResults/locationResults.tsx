@@ -227,7 +227,7 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
         source: data,
       },
       color: [color],
-      xAxis: { type: "value" },
+      xAxis: { type: "value", axisLabel: { rotate: -90 } },
       yAxis: { type: "category" },
       grid: {
         top: 30,
