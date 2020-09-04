@@ -45,9 +45,9 @@ const LocationSearchComponent: React.FC = () => {
           <h3 className="break-normal font-normal text-gray-800 text-center text-xl">
             Search by City, State, or Country
           </h3>
-          <div className="w-full pt-8">
+          <div className="mx-3 pt-8">
             <form onSubmit={submitform}>
-              <div className="max-w-xs md:max-w-xl mx-auto pr-3 p-1 bg-white rounded shadow flex items-center">
+              <div className="max-w-sm md:max-w-xl mx-auto p-1 bg-white rounded shadow flex items-center">
                 <input
                   onChange={changeSearch}
                   type="text"
