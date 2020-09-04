@@ -47,6 +47,12 @@ const QUERY = gql`
 const App: React.FunctionComponent<RouteComponentProps> = (props) => {
   const params = QueryString.parse(props.location.search);
 
+  // Capitalize location name
+  params.q = (params.q as string).replace(
+    /(^\w{1})|(\s{1}\w{1})|(,{1}\s{1}\w{2}$)/g,
+    (match) => match.toUpperCase()
+  );
+
   // Calls GraphQL
   const { loading, error, data } = useQuery<QueryResult, QueryVars>(QUERY, {
     variables: { location: params.q as string },
@@ -208,10 +214,6 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
         </div>
       </div>
     </div>
-  );
-
-  console.log(
-    (languages as Language[]).map((x) => [x.name, x.uniqueCompanies])
   );
 
   const getOption = (

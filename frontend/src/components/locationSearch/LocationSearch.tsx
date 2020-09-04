@@ -12,7 +12,7 @@ const LocationSearchComponent: React.FC = () => {
     { name: "United States" },
     { name: "San Francisco, CA" },
     { name: "Irvine, CA" },
-    { name: "New York, NY" },
+    { name: "New York City, NY" },
     { name: "Washington, D.C." },
     { name: "Chicago, IL" },
     { name: "Austin, TX" },
