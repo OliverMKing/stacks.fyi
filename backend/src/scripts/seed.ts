@@ -5,6 +5,7 @@ import { Languages } from 'src/model/languages.entity';
 import { Frameworks } from 'src/model/frameworks.entity';
 import { createInferTypeNode } from 'typescript';
 import { UseFilters } from '@nestjs/common';
+import { Console } from 'console';
 var unirest = require('unirest');
 const cities = require('all-the-cities');
 const yourhandle = require('countrycitystatejson');
@@ -59,7 +60,7 @@ statemap.set('Washington', 'WA');
 statemap.set('Wisconsin', 'WI');
 statemap.set('Wyoming', 'WY');
 statemap.set('West Virginia', 'WV');
-
+let statearr = [];
 let states = yourhandle.getCountryByShort('US').states;
 let count = 0;
 var array = [];
@@ -74,26 +75,25 @@ for (let state in states) {
       for (let eachcity in thecity) {
         let cityabrev = statemap.get(state);
 
-        if (thecity[eachcity].population > 100000 && thecity[eachcity].country == 'US' && thecity[eachcity].adminCode == cityabrev) {
+        if (
+          thecity[eachcity].population > 100000 &&
+          thecity[eachcity].country == 'US' &&
+          thecity[eachcity].adminCode == cityabrev
+        ) {
           //  console.log("-------------------BIG CITY------------------")
           //  console.log(thecity[eachcity]);
-          array.push(thecity[eachcity].name + ", " + thecity[eachcity].adminCode);
+          array.push(
+            thecity[eachcity].name + ', ' + thecity[eachcity].adminCode,
+          );
           count += 1;
         }
       }
-
-    }
-    catch{
-
-    }
-
+    } catch {}
   }
-
 }
 for (let city3 in array) {
   console.log(array[city3]);
 }
-
 
 var languages = [
   'Java',
@@ -146,6 +146,7 @@ async function run() {
   US.frameworks = new Frameworks();
 
   for (let city3 in array) {
+    const state = getState(array[city3]);
     const city = new Location();
     city.name = array[city3];
     city.languages = new Languages();
@@ -155,21 +156,59 @@ async function run() {
     for (let lang in languages) {
       //let total = await (callApi(languages[lang], testcities[city3]));
 
-
-
       city.languages[languages[lang]] = 74585;
+      let vartotal =
+        city.languages[languages[lang]].value +
+        state.languages[languages[lang]].value;
+      console.log(vartotal);
+      state.languages[languages[lang]] = vartotal;
     }
     for (let frame in frameworks) {
       //let total = await (callApi(frameworks[frame], testcities[city3]));
       let b = Math.random() * 10;
       city.frameworks[frameworks[frame]] = 54812;
+      let vartotal =
+        city.frameworks[frameworks[frame]].value +
+        state.frameworks[frameworks[frame]].value;
+      console.log(vartotal);
+      state.frameworks[frameworks[frame]] = vartotal;
     }
 
     work.push(repo.save(city));
   }
+  for (let States in statearr) {
+    work.push(repo.save(statearr[States]));
+  }
   work.push(repo.save(US));
 
   return await Promise.all(work);
+}
+function getState(city) {
+  // console.log(city);
+  let arr: any[] = city.split(', ');
+  // console.log(arr[0]);
+  //console.log(arr[1]);
+  //console.log(city.split(', ')[1]);
+  for (let state in statearr) {
+    let name = getKeyByValue(statemap, arr[1]);
+    if (statearr[state].name == name) {
+      // console.log('Already found state in db');
+      return statearr[state];
+    }
+  }
+
+  let name = getKeyByValue(statemap, arr[1]);
+  const State1 = new Location();
+  State1.name = name;
+  State1.languages = new Languages();
+  State1.type = Type.State;
+  State1.frameworks = new Frameworks();
+  statearr.push(State1);
+
+  return State1;
+}
+function getKeyByValue(object, value) {
+  return Object.keys(object).find(key => object[key] === value);
 }
 function callApi(lang, city) {
   var req = unirest('GET', 'https://indeed-com.p.rapidapi.com/search/jobs');
@@ -190,7 +229,7 @@ function callApi(lang, city) {
       useQueryString: true,
     });
 
-    req.end(function (res) {
+    req.end(function(res) {
       if (res.error) throw new Error(res.error);
       console.log(res.body.totalResults);
       resolve(res.body.totalResults);
