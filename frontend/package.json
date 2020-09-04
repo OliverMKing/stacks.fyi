@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@types/echarts": "^4.6.5",
+    "@types/react-router-hash-link": "^1.2.1",
     "autoprefixer": "^9.8.6",
     "postcss-cli": "^7.1.1",
     "tailwindcss": "^1.6.2"
