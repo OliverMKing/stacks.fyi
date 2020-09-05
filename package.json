@@ -13,7 +13,8 @@
     "typeorm:init": "cd backend && yarn typeorm:migration:generate -- my_init",
     "typeorm:run": "cd backend && yarn typeorm:migration:run",
     "db:seed": "cd backend && yarn db:seed",
-    "db:backup": "cd backend && yarn db:backup"
+    "db:backup": "cd backend && yarn db:backup",
+    "db:restore": "cd backend && yarn db:restore"
   },
   "repository": "https://github.com/OliverMKing/stacks.fyi.git",
   "dependencies": {

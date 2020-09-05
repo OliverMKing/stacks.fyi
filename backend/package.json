@@ -13,6 +13,7 @@
     "typeorm:migration:run": "yarn typeorm -- migration:run",
     "db:seed": "ts-node -r tsconfig-paths/register src/scripts/seed.ts",
     "db:backup": "./src/scripts/backup-db.sh",
+    "db:restore": "./src/scripts/restore-db.sh",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
