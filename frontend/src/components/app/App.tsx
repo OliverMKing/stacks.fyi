@@ -8,7 +8,7 @@ import NotFoundComponent from "../notFound/NotFound";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 const client = new ApolloClient({
-  uri: "http://localhost:3001/graphql",
+  uri: "https://stacks.fyi:3001/graphql",
   cache: new InMemoryCache(),
 });
 

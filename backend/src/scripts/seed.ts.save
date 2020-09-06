@@ -7,7 +7,6 @@ import { createInferTypeNode } from 'typescript';
 import { UseFilters } from '@nestjs/common';
 import { Console } from 'console';
 var unirest = require('unirest');
-const indeed = require('indeed-scraper');
 const cities = require('all-the-cities');
 const countrycitystate = require('countrycitystatejson');
 
@@ -154,27 +153,22 @@ async function run() {
             console.log('Adding city', city.name);
 
             for (let lang of languages) {
-              const total:string = await (callApi(lang, city.name));
-             let total1:string[] = total.split(" ");
-		let total2 = parseInt(total1[23].replace(/,/g, ""),10);
-		
-		 //const total = 1;
-              city.languages[lang] = total2;
+              const  total = await (callApi(lang, city.name));
+             // const total = 1;
+              city.languages[lang] = total;
 
               // Update State and US
-              stateLoc.languages[lang] += total2;
-              US.languages[lang] += total2;
+              stateLoc.languages[lang] += total;
+              US.languages[lang] += total;
             }
             for (let frame of frameworks) {
-             const total:string = await (callApi(frame, city.name));
-              let total1:string[] = total.split(" ");
-		let total2 = parseInt(total1[23].replace(/,/g, ""),10);
-
-              city.frameworks[frame] = total2;
+              const total = await (callApi(frame, city.name));
+              //const total = 1;
+              city.frameworks[frame] = total;
 
               // Update State and US
-              stateLoc.frameworks[frame] += total2;
-              US.frameworks[frame] += total2;
+              stateLoc.frameworks[frame] += total;
+              US.frameworks[frame] += total;
             }
 
             // Save city
@@ -193,16 +187,16 @@ async function run() {
   DC.frameworks = new Frameworks();
   DC.type = Type.City;
   for (let lang of languages) {
-    //const  total = await (callApi(lang, DC.name));
-    const total = 1;
+    const  total = await (callApi(lang, DC.name));
+    //const total = 1;
     DC.languages[lang] = total;
 
     // Update  US
     US.languages[lang] += total;
   }
   for (let frame of frameworks) {
-    //const total = await (callApi(frame, DC.name));
-    const total = 1;
+    const total = await (callApi(frame, DC.name));
+    //const total = 1;
     DC.frameworks[frame] = total;
 
     // Update  US
@@ -215,19 +209,27 @@ async function run() {
   return await Promise.all(work);
 }
 
-function callApi(lang, city): Promise<string> {
-   return new Promise((resolve) => {
-    const queryOptions = {
-      host: "www.indeed.com",
+function callApi(lang, city) {
+  var req = unirest('GET', 'https://indeed-com.p.rapidapi.com/search/jobs');
+  return new Promise(resolve => {
+    req.query({
+      sort: 'relevance',
+      location: city,
+      offset: '0',
       query: lang,
-      city: city,
-      radius: "100",
-      jobType: "fulltime",
-      sort: "date",
-    };
-    indeed.query(queryOptions).then((res) => {
-      console.log(res); // An array of Job objects
-      resolve(res);
+      country: 'us',
+      radius: '100',
+    });
+
+    req.headers({
+      'x-rapidapi-host': 'indeed-com.p.rapidapi.com',
+      'x-rapidapi-key': '',
+      useQueryString: true,
+    });
+
+    req.end(function(res) {
+      if (res.error) throw new Error(res.error);
+      resolve(res.body.totalResults);
     });
   });
 }

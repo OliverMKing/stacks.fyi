@@ -39,6 +39,8 @@
     "apollo-server-express": "^2.16.1",
     "countrycitystatejson": "^20.8.9-a",
     "dotenv": "^8.2.0",
+    "forever": "^3.0.2",
+    "indeed-scraper": "^3.1.2",
     "pg": "^8.3.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
