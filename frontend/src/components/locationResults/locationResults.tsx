@@ -146,17 +146,15 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
   }
 
   // Get top 3 information
-  const languages = data?.languageByLocation;
-  const topLanguages = languages
-    ?.slice()
-    .sort((a, b) => (a.jobListings < b.jobListings ? 1 : -1))
-    .slice(0, 3);
+  const languages = data?.languageByLocation
+    .slice()
+    .sort((a, b) => (a.jobListings > b.jobListings ? 1 : -1));
+  const topLanguages = languages.slice(-3).reverse();
 
-  const frameworks = data?.frameworkByLocation;
-  const topFrameworks = frameworks
-    ?.slice()
-    .sort((a, b) => (a.jobListings < b.jobListings ? 1 : -1))
-    .slice(0, 3);
+  const frameworks = data?.frameworkByLocation
+    .slice()
+    .sort((a, b) => (a.jobListings > b.jobListings ? 1 : -1));
+  const topFrameworks = frameworks.slice(-3).reverse();
 
   const ranking = (first: string, second: string, third: string) => (
     <div className="flex flex-col sm:flex-row justify-center sm:pt-12 my-8 sm:my-4 ">
@@ -248,6 +246,13 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
     };
   };
 
+  // Map some weird language names for display
+  let namesMap = new Map();
+  namesMap.set("Golang", "Go");
+  namesMap.set("Cpp", "C++");
+  namesMap.set("Csharp", "C#");
+  namesMap.set("ObjectiveC", "Objective-C");
+
   return (
     <div className="bg-gray-100 min-h-screen pb-3">
       <div className="w-full container mx-auto">
@@ -271,7 +276,7 @@ const App: React.FunctionComponent<RouteComponentProps> = (props) => {
             <ReactEcharts
               option={getOption(
                 (languages as Language[]).map((x) => [
-                  x.name,
+                  namesMap.has(x.name) ? namesMap.get(x.name) : x.name,
                   x.uniqueCompanies,
                 ]),
                 "#3182ce"
